@@ -31,6 +31,7 @@ function App() {
         <div className="buttons">
           <Button
             text={'inc'}
+            count={count}
             changeCount={addCount}
           />
           <Button

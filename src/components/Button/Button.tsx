@@ -13,7 +13,11 @@ const Button = (props: PropsType) => {
 
   return (
     <button
-      disabled={props.count === 0}
+      disabled={
+        props.count === 0 && props.text === 'reset'
+        ||
+        props.count === 5 && props.text === 'inc'
+      }
       className="button"
       onClick={onClickHandler}>
       {props.text}
