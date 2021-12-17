@@ -1,16 +1,27 @@
 import React, {useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Display from "./components/Display/Display";
 import Button from "./components/Button/Button";
 
-export type countType = 0 | 1 | 2 | 3 | 4 | 5;
-
 function App() {
-  const [count, setCount] = useState<countType>(0);
+  let [count, setCount] = useState<number>(0);
 
-  const changeCount = () => {
-    console.log('hello');
+  const addCount = () => {
+    if(count >= 0 && count < 5) {
+      setCount(++count);
+    }
+  }
+
+  const resetCount = () => {
+    if(count !== 0) {
+      setInterval(() => {
+        if(count === 0) {
+          return;
+        } else {
+          setCount(--count);
+        }
+      }, 50);
+    }
   }
 
   return (
@@ -20,11 +31,12 @@ function App() {
         <div className="buttons">
           <Button
             text={'inc'}
-            changeCount={changeCount}
+            changeCount={addCount}
           />
           <Button
             text={'reset'}
-            changeCount={changeCount}
+            count={count}
+            changeCount={resetCount}
           />
         </div>
       </div>

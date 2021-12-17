@@ -2,6 +2,7 @@ import React from "react";
 
 type PropsType = {
   text: string
+  count?: number
   changeCount: () => void
 }
 
@@ -12,6 +13,7 @@ const Button = (props: PropsType) => {
 
   return (
     <button
+      disabled={props.count === 0}
       className="button"
       onClick={onClickHandler}>
       {props.text}
