@@ -60,6 +60,11 @@
   cursor: pointer;
 }
 
+.active {
+  color: red;
+  font-size: 80px;
+}
+
 .button:disabled, .button:hover:disabled {
   background: #949494;
   cursor: auto;

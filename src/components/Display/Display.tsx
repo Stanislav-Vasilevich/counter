@@ -5,9 +5,11 @@ type PropsType = {
 }
 
 const Display = (props: PropsType) => {
+  const classActive = props.count === 5 ? 'active' : ''
+  const classes = 'num ' + classActive
   return (
     <div className="display">
-      <div className="num">{props.count}</div>
+      <div className={classes}>{props.count}</div>
     </div>
   )
 }
