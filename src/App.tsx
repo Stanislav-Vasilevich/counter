@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Box from './components/Box/Box';
 
+export type boxType = 'counter' | 'setCounter';
 
 function App() {
   return (
@@ -9,8 +10,8 @@ function App() {
       <div className="container">
         <div className="row">
           <div className="col">
-            <Box/>
-            <Box/>
+            <Box type={'setCounter'}/>
+            <Box type={'counter'}/>
           </div>
         </div>
       </div>

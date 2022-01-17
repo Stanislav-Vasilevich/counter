@@ -1,0 +1,30 @@
+.display {
+  width: 100%;
+  padding: 0 20px;
+}
+
+.row {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px 0;
+}
+
+.row:last-child {
+  margin: 0;
+}
+
+.row span {
+  font-size: 22px;
+}
+
+.row input {
+  display: flex;
+  width: 100px;
+  height: 100%;
+  text-align: center;
+  font-size: 22px;
+  outline: none;
+  border: none;
+}

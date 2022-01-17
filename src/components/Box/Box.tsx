@@ -1,45 +1,82 @@
 import React, {useState} from "react";
 import Display from "./../Display/Display";
 import Button from "./../Button/Button";
+import {boxType} from "../../App";
 
-const Box = () => {
-  let [count, setCount] = useState<number>(0);
+type PropsType = {
+  type: boxType
+}
+
+const Box = (props: PropsType) => {
+  let [startCount, setStartCount] = useState<number>(0);
+  let [maxCount, setMaxCount] = useState<number>(5);
 
   const addCount = () => {
-    if(count >= 0 && count < 5) {
-      setCount(++count);
+    if(startCount >= 0 && startCount < 5) {
+      setStartCount(++startCount);
     }
   }
 
   const resetCount = () => {
-    if(count !== 0) {
+    if(startCount !== 0) {
       setInterval(() => {
-        if(count === 0) {
+        if(startCount === 0) {
           return;
         } else {
-          setCount(--count);
+          setStartCount(--startCount);
         }
       }, 50);
     }
   }
 
+  const changeStartCounter = (num: number) => {
+    setStartCount(num);
+  }
+
+  const changeMaxCounter = (num: number) => {
+    setMaxCount(num);
+  }
+
   return (
     <div className="box">
-      <Display count={count}/>
+      <Display
+        type={props.type}
+        startCount={startCount}
+        maxCount={maxCount}
+        changeStartCounter={changeStartCounter}
+        changeMaxCounter={changeMaxCounter}
+      />
       <div className="buttons">
-        <Button
-          text={'inc'}
-          count={count}
-          changeCount={addCount}
-        />
-        <Button
-          text={'reset'}
-          count={count}
-          changeCount={resetCount}
-        />
+        {
+          props.type === 'counter'
+          ? (
+            <>
+              <Button
+                text={'inc'}
+                count={startCount}
+                changeCount={addCount}
+              />
+              <Button
+                text={'reset'}
+                count={startCount}
+                changeCount={resetCount}
+              />
+            </>
+            )
+            : (
+              <Button
+                text={'set'}
+                count={startCount}
+                changeCount={resetCount}
+              />
+            )
+        }
+
       </div>
     </div>
   );
+
+
 }
 
 export default Box;
