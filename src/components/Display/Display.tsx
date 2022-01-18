@@ -22,6 +22,8 @@ const Display = (props: PropsType) => {
     props.changeStartCounter(Number(e.currentTarget.value));
   }
 
+  console.log('display: ', props.startCount);
+
   return (
     <div className="display">
       {

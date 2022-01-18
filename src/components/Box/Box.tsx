@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Display from "./../Display/Display";
 import Button from "./../Button/Button";
 import {boxType} from "../../App";
@@ -8,8 +8,16 @@ type PropsType = {
 }
 
 const Box = (props: PropsType) => {
-  let [startCount, setStartCount] = useState<number>(0);
+  let [startCount, setStartCount] = useState<number>(0); // 4
   let [maxCount, setMaxCount] = useState<number>(5);
+
+  useEffect(() => {
+    console.log("1 useEffect: ", startCount);
+  }, []);
+
+  useEffect(() => {
+    console.log('2 useEffect: ', startCount);
+  }, [startCount] )
 
   const addCount = () => {
     if(startCount >= 0 && startCount < 5) {
@@ -29,20 +37,25 @@ const Box = (props: PropsType) => {
     }
   }
 
+  // change useState startCount
   const changeStartCounter = (num: number) => {
-    setStartCount(num);
-    console.log(num);
-    
+    setStartCount(num); // 4
+    console.log('changeStartCounter: ', num);
   }
 
+  // change useState maxCount
   const changeMaxCounter = (num: number) => {
     setMaxCount(num);
-    console.log(num);
   }
 
+  // кнопка SET
   const startMaxCount = () => {
-    // localStorage.setItem(startNumber, startCount);
-    // localStorage.setItem(maxNumber, maxCount);
+    localStorage.setItem('startNumber', startCount.toString());
+    localStorage.setItem('maxNumber', maxCount.toString());
+
+    console.log('SET: ', startCount);
+
+    setStartCount(startCount);
   }
 
   return (
@@ -79,12 +92,9 @@ const Box = (props: PropsType) => {
               />
             )
         }
-
       </div>
     </div>
   );
-
-
 }
 
 export default Box;
