@@ -8,7 +8,7 @@ type PropsType = {
 }
 
 const Box = (props: PropsType) => {
-  let [startCount, setStartCount] = useState<number>(0); // 4
+  let [startCount, setStartCount] = useState<number>(0);
   let [maxCount, setMaxCount] = useState<number>(5);
 
   // получаем данные из хранилища при первой отрисовки и устанавливаем в state
@@ -28,7 +28,7 @@ const Box = (props: PropsType) => {
   }, []);
 
   useEffect(() => {
-    console.log('2 useEffect: ', startCount);
+    // console.log('2 useEffect: ', startCount);
 
   }, [startCount]);
 

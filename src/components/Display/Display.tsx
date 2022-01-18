@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from "react";
+import React, {ChangeEvent, useState} from 'react';
 import {boxType} from "../../App";
 import styles from './Display.module.css'
 
@@ -11,6 +11,8 @@ type PropsType = {
 }
 
 const Display = (props: PropsType) => {
+  const [value, setValue] = useState(props.startCount);
+
   const classActive = props.startCount === 5 ? 'active' : ''
   const classes = 'num ' + classActive
 
@@ -22,13 +24,13 @@ const Display = (props: PropsType) => {
     props.changeStartCounter(Number(e.currentTarget.value));
   }
 
-  console.log('display: ', props.startCount);
+  console.log('display: ', value);
 
   return (
     <div className="display">
       {
         props.type === 'counter'
-          ? <div className={classes}>{props.startCount}</div>
+          ? <div className={classes}>{value}</div>
           : (
             <div className={styles.display}>
               <div className={styles.row}>
