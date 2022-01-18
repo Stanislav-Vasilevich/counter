@@ -31,10 +31,18 @@ const Box = (props: PropsType) => {
 
   const changeStartCounter = (num: number) => {
     setStartCount(num);
+    console.log(num);
+    
   }
 
   const changeMaxCounter = (num: number) => {
     setMaxCount(num);
+    console.log(num);
+  }
+
+  const startMaxCount = () => {
+    // localStorage.setItem(startNumber, startCount);
+    // localStorage.setItem(maxNumber, maxCount);
   }
 
   return (
@@ -67,7 +75,7 @@ const Box = (props: PropsType) => {
               <Button
                 text={'set'}
                 count={startCount}
-                changeCount={resetCount}
+                changeCount={startMaxCount}
               />
             )
         }
