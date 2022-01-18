@@ -11,13 +11,26 @@ const Box = (props: PropsType) => {
   let [startCount, setStartCount] = useState<number>(0); // 4
   let [maxCount, setMaxCount] = useState<number>(5);
 
+  // получаем данные из хранилища при первой отрисовки и устанавливаем в state
   useEffect(() => {
-    console.log("1 useEffect: ", startCount);
+    // console.log("1 useEffect: ", startCount);
+
+    let getStartValue = localStorage.getItem('startNumber');
+    let getMaxValue = localStorage.getItem('maxNumber');
+
+    if(getStartValue) {
+      setStartCount(JSON.parse(getStartValue));
+    }
+
+    if(getMaxValue) {
+      setMaxCount(JSON.parse(getMaxValue));
+    }
   }, []);
 
   useEffect(() => {
     console.log('2 useEffect: ', startCount);
-  }, [startCount] )
+
+  }, [startCount]);
 
   const addCount = () => {
     if(startCount >= 0 && startCount < 5) {
@@ -39,8 +52,8 @@ const Box = (props: PropsType) => {
 
   // change useState startCount
   const changeStartCounter = (num: number) => {
-    setStartCount(num); // 4
-    console.log('changeStartCounter: ', num);
+    setStartCount(num);
+    // console.log('changeStartCounter: ', num);
   }
 
   // change useState maxCount
@@ -49,13 +62,13 @@ const Box = (props: PropsType) => {
   }
 
   // кнопка SET
-  const startMaxCount = () => {
+  const startAndMaxCount = () => {
     localStorage.setItem('startNumber', startCount.toString());
     localStorage.setItem('maxNumber', maxCount.toString());
 
-    console.log('SET: ', startCount);
-
     setStartCount(startCount);
+
+    console.log('SET: ', startCount);
   }
 
   return (
@@ -88,7 +101,7 @@ const Box = (props: PropsType) => {
               <Button
                 text={'set'}
                 count={startCount}
-                changeCount={startMaxCount}
+                changeCount={startAndMaxCount}
               />
             )
         }
