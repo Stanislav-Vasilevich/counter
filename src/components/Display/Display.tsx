@@ -6,12 +6,15 @@ type PropsType = {
   type: boxType
   startCount: number
   maxCount: number
+  display: number
   changeStartCounter: (num: number) => void
   changeMaxCounter: (num: number) => void
+  setDisplay: (num: number) => void
 }
 
 const Display = (props: PropsType) => {
-  console.log('display: ', props.startCount)
+  console.log('startCount: ', props.startCount);
+  console.log('display: ', props.display);
 
   const classActive = props.startCount === 5 ? 'active' : ''
   const classes = 'num ' + classActive
@@ -28,7 +31,9 @@ const Display = (props: PropsType) => {
     <div className="display">
       {
         props.type === 'counter'
-          ? <div className={classes}>{props.startCount}</div>
+          // display с цифрой
+          ? <div className={classes}>{props.display}</div>
+          // display с вводом данных
           : (
             <div className={styles.display}>
               <div className={styles.row}>
