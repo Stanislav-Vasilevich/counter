@@ -13,8 +13,6 @@ const Box = (props: PropsType) => {
 
   // получаем данные из хранилища при первой отрисовки и устанавливаем в state
   useEffect(() => {
-    // console.log("1 useEffect: ", startCount);
-
     let getStartValue = localStorage.getItem('startNumber');
     let getMaxValue = localStorage.getItem('maxNumber');
 
@@ -27,17 +25,19 @@ const Box = (props: PropsType) => {
     }
   }, []);
 
-  useEffect(() => {
-    // console.log('2 useEffect: ', startCount);
+  // useEffect(() => {
+  //   console.log('useEffect[startCount]');
+  //   setStartCount(startCount);
+  // }, [startCount]);
 
-  }, [startCount]);
-
+  // кнопка inc
   const addCount = () => {
     if(startCount >= 0 && startCount < 5) {
       setStartCount(++startCount);
     }
   }
 
+  // кнопка reset
   const resetCount = () => {
     if(startCount !== 0) {
       setInterval(() => {
@@ -50,13 +50,10 @@ const Box = (props: PropsType) => {
     }
   }
 
-  // change useState startCount
   const changeStartCounter = (num: number) => {
     setStartCount(num);
-    // console.log('changeStartCounter: ', num);
   }
 
-  // change useState maxCount
   const changeMaxCounter = (num: number) => {
     setMaxCount(num);
   }
@@ -65,10 +62,6 @@ const Box = (props: PropsType) => {
   const startAndMaxCount = () => {
     localStorage.setItem('startNumber', startCount.toString());
     localStorage.setItem('maxNumber', maxCount.toString());
-
-    setStartCount(startCount);
-
-    console.log('SET: ', startCount);
   }
 
   return (

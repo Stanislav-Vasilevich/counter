@@ -11,7 +11,7 @@ type PropsType = {
 }
 
 const Display = (props: PropsType) => {
-  const [value, setValue] = useState(props.startCount);
+  console.log('display: ', props.startCount)
 
   const classActive = props.startCount === 5 ? 'active' : ''
   const classes = 'num ' + classActive
@@ -24,13 +24,11 @@ const Display = (props: PropsType) => {
     props.changeStartCounter(Number(e.currentTarget.value));
   }
 
-  console.log('display: ', value);
-
   return (
     <div className="display">
       {
         props.type === 'counter'
-          ? <div className={classes}>{value}</div>
+          ? <div className={classes}>{props.startCount}</div>
           : (
             <div className={styles.display}>
               <div className={styles.row}>
