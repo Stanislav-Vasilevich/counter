@@ -28,3 +28,19 @@
   outline: none;
   border: none;
 }
+
+.num {
+  font-size: 64px;
+  font-weight: bold;
+  color: #6d6c6c;
+}
+
+.active {
+  color: red;
+  font-size: 80px;
+}
+
+.text {
+  font-size: 20px;
+  color: #3d4747;
+}

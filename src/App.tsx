@@ -5,9 +5,9 @@ import Box from './components/Box/Box';
 export type boxType = 'counter' | 'setCounter';
 
 function App() {
-  let [startCount, setStartCount] = useState<number>(0);
-  let [display, setDisplay] = useState<number>(0);
-  let [maxCount, setMaxCount] = useState<number>(5);
+  const [startCount, setStartCount] = useState(0);
+  const [maxCount, setMaxCount] = useState(5);
+  const [display, setDisplay] = useState(0);
 
   return (
     <div className="App">

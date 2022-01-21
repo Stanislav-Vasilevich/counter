@@ -14,17 +14,22 @@ type PropsType = {
 }
 
 const Box = (props: PropsType) => {
-  // получаем данные из хранилища при первой отрисовки и устанавливаем в state
+  const [changeStartValue, setChangeStartValue] = useState(0);
+  const [changeMaxValue, setChangeMaxValue] = useState(0);
+
   useEffect(() => {
     let getStartValue = localStorage.getItem('startNumber');
     let getMaxValue = localStorage.getItem('maxNumber');
 
     if(getStartValue) {
       props.setStartCount(JSON.parse(getStartValue));
+      props.setDisplay(JSON.parse(getStartValue));
+      setChangeStartValue(JSON.parse(getStartValue));
     }
 
     if(getMaxValue) {
       props.setMaxCount(JSON.parse(getMaxValue));
+      setChangeMaxValue(JSON.parse(getMaxValue));
     }
   }, []);
 
@@ -37,22 +42,26 @@ const Box = (props: PropsType) => {
 
   // кнопка inc
   const addCount = () => {
-    if(props.startCount >= 0 && props.startCount < 5) {
-      props.setStartCount(props.startCount);
+    if(props.startCount <= 0) { //  && props.startCount < props.display
+      props.setStartCount(props.startCount + 1);
     }
+    props.setDisplay(props.display + 1);
   }
 
   // кнопка reset
   const resetCount = () => {
-    if(props.startCount !== 0) {
-      setInterval(() => {
-        if(props.startCount === 0) {
-          return;
-        } else {
-          props.setStartCount(props.startCount);
-        }
-      }, 50);
-    }
+    //   setInterval(() => {
+    //     if(props.startCount === 0) {
+    //       return;
+    //     } else {
+    //       props.setStartCount(props.startCount);
+    //     }
+    //     console.log();
+    //   }, 50);
+    // } else {
+    //   return;
+
+    props.setDisplay(props.startCount);
   }
 
   const changeStartCounter = (num: number) => {
@@ -73,6 +82,8 @@ const Box = (props: PropsType) => {
         setDisplay={props.setDisplay}
         changeStartCounter={changeStartCounter}
         changeMaxCounter={changeMaxCounter}
+        changeStartValue={changeStartValue}
+        changeMaxValue={changeMaxValue}
       />
       <div className="buttons">
         {
@@ -83,11 +94,16 @@ const Box = (props: PropsType) => {
                 text={'inc'}
                 count={props.startCount}
                 changeCount={addCount}
+                display={props.display}
+                maxCount={props.maxCount}
               />
               <Button
                 text={'reset'}
                 count={props.startCount}
                 changeCount={resetCount}
+                display={props.display}
+                startCount={props.startCount}
+                maxCount={props.maxCount}
               />
             </>
             )

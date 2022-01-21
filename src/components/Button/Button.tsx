@@ -4,6 +4,9 @@ type PropsType = {
   text: string
   count?: number
   changeCount: () => void
+  startCount?: number
+  maxCount?: number
+  display?: number
 }
 
 const Button = (props: PropsType) => {
@@ -14,9 +17,9 @@ const Button = (props: PropsType) => {
   return (
     <button
       disabled={
-        props.count === 0 && props.text === 'reset'
+        props.display === props.startCount && props.text === 'reset'
         ||
-        props.count === 5 && props.text === 'inc'
+        props.display === props.maxCount && props.text === 'inc'
       }
       className="button"
       onClick={onClickHandler}>

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import {boxType} from "../../App";
 import styles from './Display.module.css'
 
@@ -10,14 +10,15 @@ type PropsType = {
   changeStartCounter: (num: number) => void
   changeMaxCounter: (num: number) => void
   setDisplay: (num: number) => void
+  changeStartValue: number
+  changeMaxValue: number
 }
 
 const Display = (props: PropsType) => {
-  console.log('startCount: ', props.startCount);
-  console.log('display: ', props.display);
+  const classActive = props.display === props.maxCount ? styles.active : '';
+  const classes = styles.num + ' ' + classActive;
 
-  const classActive = props.startCount === 5 ? 'active' : ''
-  const classes = 'num ' + classActive
+  console.log(classes)
 
   const changeMaxCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
     props.changeMaxCounter(Number(e.currentTarget.value));
@@ -27,13 +28,19 @@ const Display = (props: PropsType) => {
     props.changeStartCounter(Number(e.currentTarget.value));
   }
 
+  let changeInputValue = props.startCount > props.changeStartValue || props.maxCount < props.changeMaxValue;
+
+  const displayText = changeInputValue
+    ? <div className={styles.text}>Enter values and press 'set'</div>
+    : <div className={classes}>{props.display}</div>;
+
   return (
     <div className="display">
       {
         props.type === 'counter'
-          // display с цифрой
-          ? <div className={classes}>{props.display}</div>
-          // display с вводом данных
+          // экран с номером
+          ? displayText
+          // экран с вводом данных
           : (
             <div className={styles.display}>
               <div className={styles.row}>
