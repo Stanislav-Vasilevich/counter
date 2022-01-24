@@ -1,45 +1,58 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
-import {boxType} from "../../App";
+import {boxType, displayType} from "../../App";
 import styles from './Display.module.css'
 
 type PropsType = {
   type: boxType
-  startCount: number
-  maxCount: number
-  display: number
-  changeStartCounter: (num: number) => void
-  changeMaxCounter: (num: number) => void
+  startValue: number
+  maxValue: number
+  changeStartValue: (num: number) => void
+  changeMaxValue: (num: number) => void
+  display: displayType
   setDisplay: (num: number) => void
-  changeStartValue: number
-  changeMaxValue: number
+  localStorageStartValue: number
+  localStorageMaxValue: number
 }
 
 const Display = (props: PropsType) => {
-  const classActive = props.display === props.maxCount ? styles.active : '';
+  const classActive = props.display === props.maxValue ? styles.active : '';
   const classes = styles.num + ' ' + classActive;
 
-  console.log(classes)
-
   const changeMaxCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
-    props.changeMaxCounter(Number(e.currentTarget.value));
+    props.changeMaxValue(Number(e.currentTarget.value));
   }
 
   const changeStartCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
-    props.changeStartCounter(Number(e.currentTarget.value));
+    props.changeStartValue(Number(e.currentTarget.value));
   }
 
-  let changeInputValue = props.startCount > props.changeStartValue || props.maxCount < props.changeMaxValue;
+  // console.log('localStorageStartValue', props.localStorageStartValue);
+  // console.log('localStorageMaxValue', props.localStorageMaxValue);
+  // console.log('startValue', props.startValue);
+  // console.log('maxValue', props.maxValue);
+  // console.log('display', props.display);
 
-  const displayText = changeInputValue
-    ? <div className={styles.text}>Enter values and press 'set'</div>
-    : <div className={classes}>{props.display}</div>;
+  // if(props.startValue < 0) {
+  //   props.display = 'Incorrect value!';
+  // } else if (
+  //   props.startValue === props.maxValue
+  //   || props.startValue > props.maxValue
+  // ) {
+  // props.display = 'Incorrect value!';
+  // }
+  // else if (
+  //   props.startValue !== props.localStorageStartValue
+  //   || props.maxValue !== props.localStorageMaxValue
+  // ) {
+  //   props.display = 'enter values and press "set"';
+  // }
 
   return (
-    <div className="display">
+    <div className={styles.display}>
       {
         props.type === 'counter'
           // экран с номером
-          ? displayText
+          ? <div className={classes}>{props.display}</div>
           // экран с вводом данных
           : (
             <div className={styles.display}>
@@ -47,7 +60,7 @@ const Display = (props: PropsType) => {
                 <span>max value:</span>
                 <input
                   type="number"
-                  value={props.maxCount}
+                  value={props.maxValue}
                   onChange={changeMaxCounterHandler}
                 />
               </div>
@@ -55,7 +68,7 @@ const Display = (props: PropsType) => {
                 <span>start value:</span>
                 <input
                   type="number"
-                  value={props.startCount}
+                  value={props.startValue}
                   onChange={changeStartCounterHandler}
                 />
               </div>

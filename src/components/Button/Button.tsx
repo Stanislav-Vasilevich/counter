@@ -1,27 +1,29 @@
 import React from "react";
+import styles from './Button.module.css';
+import {displayType} from "../../App";
 
 type PropsType = {
   text: string
   count?: number
-  changeCount: () => void
-  startCount?: number
-  maxCount?: number
-  display?: number
+  setValue: () => void
+  startValue?: number
+  maxValue?: number
+  display?: displayType
 }
 
 const Button = (props: PropsType) => {
   const onClickHandler = () => {
-    props.changeCount();
+    props.setValue();
   }
 
   return (
     <button
       disabled={
-        props.display === props.startCount && props.text === 'reset'
+        props.display === props.startValue && props.text === 'reset'
         ||
-        props.display === props.maxCount && props.text === 'inc'
+        props.display === props.maxValue && props.text === 'inc'
       }
-      className="button"
+      className={styles.button}
       onClick={onClickHandler}>
       {props.text}
     </button>

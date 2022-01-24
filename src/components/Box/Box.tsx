@@ -1,55 +1,55 @@
 import React, {useEffect, useState} from "react";
 import Display from "./../Display/Display";
 import Button from "./../Button/Button";
-import {boxType} from "../../App";
+import {boxType, displayType} from "../../App";
+import styles from './Box.module.css';
 
 type PropsType = {
   type: boxType
-  startCount: number
-  maxCount: number
-  display: number
+  startValue: number
+  maxValue: number
+  setStartValue: (num: number) => void
+  setMaxValue: (num: number) => void
+  display: displayType
   setDisplay: (num: number) => void
-  setStartCount: (num: number) => void
-  setMaxCount: (num: number) => void
 }
 
 const Box = (props: PropsType) => {
-  const [changeStartValue, setChangeStartValue] = useState(0);
-  const [changeMaxValue, setChangeMaxValue] = useState(0);
+  const [localStorageStartValue, setLocalStorageStartValue] = useState(0);
+  const [localStorageMaxValue, setNewMaxValue] = useState(0);
 
   useEffect(() => {
     let getStartValue = localStorage.getItem('startNumber');
     let getMaxValue = localStorage.getItem('maxNumber');
 
     if(getStartValue) {
-      props.setStartCount(JSON.parse(getStartValue));
+      props.setStartValue(JSON.parse(getStartValue));
       props.setDisplay(JSON.parse(getStartValue));
-      setChangeStartValue(JSON.parse(getStartValue));
+      setLocalStorageStartValue(JSON.parse(getStartValue));
     }
 
     if(getMaxValue) {
-      props.setMaxCount(JSON.parse(getMaxValue));
-      setChangeMaxValue(JSON.parse(getMaxValue));
+      props.setMaxValue(JSON.parse(getMaxValue));
+      setNewMaxValue(JSON.parse(getMaxValue));
     }
   }, []);
 
   // кнопка set
-  const startAndMaxCount = () => {
-    localStorage.setItem('startNumber', props.startCount.toString());
-    localStorage.setItem('maxNumber', props.maxCount.toString());
-    props.setDisplay(props.startCount);
+  const setValue = () => {
+    localStorage.setItem('startNumber', props.startValue.toString());
+    localStorage.setItem('maxNumber', props.maxValue.toString());
+
+    props.setDisplay(props.startValue);
+    console.log('установить новое значение display');
   }
 
   // кнопка inc
-  const addCount = () => {
-    if(props.startCount <= 0) { //  && props.startCount < props.display
-      props.setStartCount(props.startCount + 1);
-    }
-    props.setDisplay(props.display + 1);
+  const addDisplay = () => {
+    props.setDisplay(+props.display + 1);
   }
 
   // кнопка reset
-  const resetCount = () => {
+  const resetDisplay = () => {
     //   setInterval(() => {
     //     if(props.startCount === 0) {
     //       return;
@@ -61,57 +61,57 @@ const Box = (props: PropsType) => {
     // } else {
     //   return;
 
-    props.setDisplay(props.startCount);
+    props.setDisplay(props.startValue);
   }
 
-  const changeStartCounter = (num: number) => {
-    props.setStartCount(num);
+  const changeStartValue = (num: number) => {
+    props.setStartValue(num);
   }
 
-  const changeMaxCounter = (num: number) => {
-    props.setMaxCount(num);
+  const changeMaxValue = (num: number) => {
+    props.setMaxValue(num);
   }
 
   return (
-    <div className="box">
+    <div className={styles.box}>
       <Display
         type={props.type}
-        startCount={props.startCount}
-        maxCount={props.maxCount}
+        startValue={props.startValue}
+        maxValue={props.maxValue}
         display={props.display}
         setDisplay={props.setDisplay}
-        changeStartCounter={changeStartCounter}
-        changeMaxCounter={changeMaxCounter}
         changeStartValue={changeStartValue}
         changeMaxValue={changeMaxValue}
+        localStorageStartValue={localStorageStartValue}
+        localStorageMaxValue={localStorageMaxValue}
       />
-      <div className="buttons">
+      <div className={styles.buttons}>
         {
           props.type === 'counter'
           ? (
             <>
               <Button
                 text={'inc'}
-                count={props.startCount}
-                changeCount={addCount}
+                count={props.startValue}
+                setValue={addDisplay}
                 display={props.display}
-                maxCount={props.maxCount}
+                maxValue={props.maxValue}
               />
               <Button
                 text={'reset'}
-                count={props.startCount}
-                changeCount={resetCount}
+                count={props.startValue}
+                setValue={resetDisplay}
                 display={props.display}
-                startCount={props.startCount}
-                maxCount={props.maxCount}
+                startValue={props.startValue}
+                maxValue={props.maxValue}
               />
             </>
             )
             : (
               <Button
                 text={'set'}
-                count={props.startCount}
-                changeCount={startAndMaxCount}
+                count={props.startValue}
+                setValue={setValue}
               />
             )
         }
