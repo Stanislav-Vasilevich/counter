@@ -10,14 +10,18 @@ type PropsType = {
   maxValue: number
   setStartValue: (num: number) => void
   setMaxValue: (num: number) => void
-  display: displayType
+  display: number
   setDisplay: (num: number) => void
+  showDisplay: displayType
+  setShowDisplay: (value: displayType) => void
+  localStorageStartValue: number
+  setLocalStorageStartValue: (num: number) => void
+  localStorageMaxValue: number
+  setLocalStorageMaxValue: (num: number) => void
+  showNewDisplay: (num: number) => void
 }
 
 const Box = (props: PropsType) => {
-  const [localStorageStartValue, setLocalStorageStartValue] = useState(0);
-  const [localStorageMaxValue, setNewMaxValue] = useState(0);
-
   useEffect(() => {
     let getStartValue = localStorage.getItem('startNumber');
     let getMaxValue = localStorage.getItem('maxNumber');
@@ -25,12 +29,12 @@ const Box = (props: PropsType) => {
     if(getStartValue) {
       props.setStartValue(JSON.parse(getStartValue));
       props.setDisplay(JSON.parse(getStartValue));
-      setLocalStorageStartValue(JSON.parse(getStartValue));
+      props.setLocalStorageStartValue(JSON.parse(getStartValue));
     }
 
     if(getMaxValue) {
       props.setMaxValue(JSON.parse(getMaxValue));
-      setNewMaxValue(JSON.parse(getMaxValue));
+      props.setLocalStorageMaxValue(JSON.parse(getMaxValue));
     }
   }, []);
 
@@ -40,12 +44,11 @@ const Box = (props: PropsType) => {
     localStorage.setItem('maxNumber', props.maxValue.toString());
 
     props.setDisplay(props.startValue);
-    console.log('установить новое значение display');
   }
 
   // кнопка inc
   const addDisplay = () => {
-    props.setDisplay(+props.display + 1);
+    props.setDisplay(props.display + 1);
   }
 
   // кнопка reset
@@ -66,6 +69,8 @@ const Box = (props: PropsType) => {
 
   const changeStartValue = (num: number) => {
     props.setStartValue(num);
+
+    props.showNewDisplay(num);
   }
 
   const changeMaxValue = (num: number) => {
@@ -82,8 +87,11 @@ const Box = (props: PropsType) => {
         setDisplay={props.setDisplay}
         changeStartValue={changeStartValue}
         changeMaxValue={changeMaxValue}
-        localStorageStartValue={localStorageStartValue}
-        localStorageMaxValue={localStorageMaxValue}
+        localStorageStartValue={props.localStorageStartValue}
+        localStorageMaxValue={props.localStorageMaxValue}
+        showDisplay={props.showDisplay}
+        setShowDisplay={props.setShowDisplay}
+        showNewDisplay={props.showNewDisplay}
       />
       <div className={styles.buttons}>
         {

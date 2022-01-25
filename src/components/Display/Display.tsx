@@ -8,10 +8,13 @@ type PropsType = {
   maxValue: number
   changeStartValue: (num: number) => void
   changeMaxValue: (num: number) => void
-  display: displayType
+  display: number
   setDisplay: (num: number) => void
   localStorageStartValue: number
   localStorageMaxValue: number
+  showDisplay: displayType
+  setShowDisplay: (value: displayType) => void
+  showNewDisplay: (num: number) => void
 }
 
 const Display = (props: PropsType) => {
@@ -32,20 +35,7 @@ const Display = (props: PropsType) => {
   // console.log('maxValue', props.maxValue);
   // console.log('display', props.display);
 
-  // if(props.startValue < 0) {
-  //   props.display = 'Incorrect value!';
-  // } else if (
-  //   props.startValue === props.maxValue
-  //   || props.startValue > props.maxValue
-  // ) {
-  // props.display = 'Incorrect value!';
-  // }
-  // else if (
-  //   props.startValue !== props.localStorageStartValue
-  //   || props.maxValue !== props.localStorageMaxValue
-  // ) {
-  //   props.display = 'enter values and press "set"';
-  // }
+  console.log('show-display: ', props.showDisplay);
 
   return (
     <div className={styles.display}>
