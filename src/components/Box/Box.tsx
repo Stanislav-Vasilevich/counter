@@ -18,7 +18,6 @@ type PropsType = {
   setLocalStorageStartValue: (num: number) => void
   localStorageMaxValue: number
   setLocalStorageMaxValue: (num: number) => void
-  showNewDisplay: (num: number) => void
 }
 
 const Box = (props: PropsType) => {
@@ -30,6 +29,7 @@ const Box = (props: PropsType) => {
       props.setStartValue(JSON.parse(getStartValue));
       props.setDisplay(JSON.parse(getStartValue));
       props.setLocalStorageStartValue(JSON.parse(getStartValue));
+      props.setShowDisplay(JSON.parse(getStartValue));
     }
 
     if(getMaxValue) {
@@ -37,6 +37,25 @@ const Box = (props: PropsType) => {
       props.setLocalStorageMaxValue(JSON.parse(getMaxValue));
     }
   }, []);
+
+  const showNewDisplay = () => {
+    if(props.startValue < 0) {
+      props.setShowDisplay('Incorrect value!');
+    } else if (
+      props.startValue === props.maxValue
+      || props.startValue > props.maxValue
+    ) {
+      props.setShowDisplay('Incorrect value!');
+    }
+    else if (
+      props.startValue !== props.localStorageStartValue
+      || props.maxValue !== props.localStorageMaxValue
+    ) {
+      props.setShowDisplay('enter values and press "set"');
+    } else {
+      props.setShowDisplay(props.localStorageStartValue);
+    }
+  }
 
   // кнопка set
   const setValue = () => {
@@ -69,8 +88,6 @@ const Box = (props: PropsType) => {
 
   const changeStartValue = (num: number) => {
     props.setStartValue(num);
-
-    props.showNewDisplay(num);
   }
 
   const changeMaxValue = (num: number) => {
@@ -91,7 +108,7 @@ const Box = (props: PropsType) => {
         localStorageMaxValue={props.localStorageMaxValue}
         showDisplay={props.showDisplay}
         setShowDisplay={props.setShowDisplay}
-        showNewDisplay={props.showNewDisplay}
+        showNewDisplay={showNewDisplay}
       />
       <div className={styles.buttons}>
         {

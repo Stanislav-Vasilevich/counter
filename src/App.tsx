@@ -15,23 +15,6 @@ function App() {
   const [display, setDisplay] = useState(0);
   const [showDisplay, setShowDisplay] = useState<displayType>(0);
 
-  const showNewDisplay = (num: number) => {
-    if(startValue < 0) {
-      setShowDisplay('Incorrect value!');
-    } else if (
-      startValue === maxValue
-      || startValue > maxValue
-    ) {
-      setShowDisplay('Incorrect value!');
-    }
-    else if (
-      startValue !== localStorageStartValue
-      || maxValue !== localStorageMaxValue
-    ) {
-      setShowDisplay('enter values and press "set"');
-    }
-  }
-
   return (
     <div className={styles.App}>
       <div className={styles.container}>
@@ -51,7 +34,6 @@ function App() {
               setLocalStorageStartValue={setLocalStorageStartValue}
               localStorageMaxValue={localStorageMaxValue}
               setLocalStorageMaxValue={setLocalStorageMaxValue}
-              showNewDisplay={showNewDisplay}
             />
             <Box
               type={'counter'}
@@ -67,7 +49,6 @@ function App() {
               setLocalStorageStartValue={setLocalStorageStartValue}
               localStorageMaxValue={localStorageMaxValue}
               setLocalStorageMaxValue={setLocalStorageMaxValue}
-              showNewDisplay={showNewDisplay}
             />
           </div>
         </div>

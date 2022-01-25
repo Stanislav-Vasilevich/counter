@@ -14,7 +14,7 @@ type PropsType = {
   localStorageMaxValue: number
   showDisplay: displayType
   setShowDisplay: (value: displayType) => void
-  showNewDisplay: (num: number) => void
+  showNewDisplay: () => void
 }
 
 const Display = (props: PropsType) => {
@@ -29,12 +29,11 @@ const Display = (props: PropsType) => {
     props.changeStartValue(Number(e.currentTarget.value));
   }
 
-  // console.log('localStorageStartValue', props.localStorageStartValue);
-  // console.log('localStorageMaxValue', props.localStorageMaxValue);
-  // console.log('startValue', props.startValue);
-  // console.log('maxValue', props.maxValue);
-  // console.log('display', props.display);
-
+  console.log('localStorageStartValue', props.localStorageStartValue);
+  console.log('localStorageMaxValue', props.localStorageMaxValue);
+  console.log('startValue', props.startValue);
+  console.log('maxValue', props.maxValue);
+  console.log('display', props.display);
   console.log('show-display: ', props.showDisplay);
 
   return (
