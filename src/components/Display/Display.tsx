@@ -1,5 +1,5 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
-import {boxType, displayType} from "../../App";
+import React, {ChangeEvent} from 'react';
+import {boxType, displayType} from '../../App';
 import styles from './Display.module.css'
 
 type PropsType = {
@@ -10,16 +10,30 @@ type PropsType = {
   changeMaxValue: (num: number) => void
   display: number
   setDisplay: (num: number) => void
-  localStorageStartValue: number
-  localStorageMaxValue: number
   showDisplay: displayType
   setShowDisplay: (value: displayType) => void
-  showNewDisplay: () => void
 }
 
 const Display = (props: PropsType) => {
   const classActive = props.display === props.maxValue ? styles.active : '';
   const classes = styles.num + ' ' + classActive;
+
+  //   if(props.startValue < 0) {
+  //     props.setShowDisplay('Incorrect value!');
+  //   } else if (
+  //     props.startValue === props.maxValue
+  //     || props.startValue > props.maxValue
+  //   ) {
+  //     props.setShowDisplay('Incorrect value!');
+  //   }
+  //   else if (
+  //     props.startValue !== props.localStorageStartValue
+  //     || props.maxValue !== props.localStorageMaxValue
+  //   ) {
+  //     props.setShowDisplay('enter values and press "set"');
+  //   } else {
+  //     props.setShowDisplay(props.localStorageStartValue);
+  //   }
 
   const changeMaxCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
     props.changeMaxValue(Number(e.currentTarget.value));
@@ -28,13 +42,6 @@ const Display = (props: PropsType) => {
   const changeStartCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
     props.changeStartValue(Number(e.currentTarget.value));
   }
-
-  console.log('localStorageStartValue', props.localStorageStartValue);
-  console.log('localStorageMaxValue', props.localStorageMaxValue);
-  console.log('startValue', props.startValue);
-  console.log('maxValue', props.maxValue);
-  console.log('display', props.display);
-  console.log('show-display: ', props.showDisplay);
 
   return (
     <div className={styles.display}>

@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {SetStateAction, useEffect, useState} from 'react';
 import Display from "./../Display/Display";
 import Button from "./../Button/Button";
-import {boxType, displayType} from "../../App";
+import {boxType, displayType} from '../../App';
 import styles from './Box.module.css';
 
 type PropsType = {
@@ -14,54 +14,36 @@ type PropsType = {
   setDisplay: (num: number) => void
   showDisplay: displayType
   setShowDisplay: (value: displayType) => void
-  localStorageStartValue: number
-  setLocalStorageStartValue: (num: number) => void
-  localStorageMaxValue: number
-  setLocalStorageMaxValue: (num: number) => void
 }
 
 const Box = (props: PropsType) => {
   useEffect(() => {
-    let getStartValue = localStorage.getItem('startNumber');
     let getMaxValue = localStorage.getItem('maxNumber');
+    let getStartValue = localStorage.getItem('startNumber');
 
     if(getStartValue) {
       props.setStartValue(JSON.parse(getStartValue));
       props.setDisplay(JSON.parse(getStartValue));
-      props.setLocalStorageStartValue(JSON.parse(getStartValue));
-      props.setShowDisplay(JSON.parse(getStartValue));
+      // props.setLocalStorageStartValue(JSON.parse(getStartValue));
     }
 
     if(getMaxValue) {
       props.setMaxValue(JSON.parse(getMaxValue));
-      props.setLocalStorageMaxValue(JSON.parse(getMaxValue));
+      // props.setLocalStorageMaxValue(JSON.parse(getMaxValue));
     }
   }, []);
 
-  const showNewDisplay = () => {
-    if(props.startValue < 0) {
-      props.setShowDisplay('Incorrect value!');
-    } else if (
-      props.startValue === props.maxValue
-      || props.startValue > props.maxValue
-    ) {
-      props.setShowDisplay('Incorrect value!');
-    }
-    else if (
-      props.startValue !== props.localStorageStartValue
-      || props.maxValue !== props.localStorageMaxValue
-    ) {
-      props.setShowDisplay('enter values and press "set"');
-    } else {
-      props.setShowDisplay(props.localStorageStartValue);
-    }
-  }
+  // useEffect(() => {
+  //   console.log('изменилось стартовое значение, меняю showDisplay');
+  //   props.setShowDisplay('enter values and press "set"');
+  // }, [props.startValue]);
 
   // кнопка set
   const setValue = () => {
     localStorage.setItem('startNumber', props.startValue.toString());
     localStorage.setItem('maxNumber', props.maxValue.toString());
 
+    // props.setDisplay(props.startValue);
     props.setDisplay(props.startValue);
   }
 
@@ -72,17 +54,6 @@ const Box = (props: PropsType) => {
 
   // кнопка reset
   const resetDisplay = () => {
-    //   setInterval(() => {
-    //     if(props.startCount === 0) {
-    //       return;
-    //     } else {
-    //       props.setStartCount(props.startCount);
-    //     }
-    //     console.log();
-    //   }, 50);
-    // } else {
-    //   return;
-
     props.setDisplay(props.startValue);
   }
 
@@ -104,11 +75,8 @@ const Box = (props: PropsType) => {
         setDisplay={props.setDisplay}
         changeStartValue={changeStartValue}
         changeMaxValue={changeMaxValue}
-        localStorageStartValue={props.localStorageStartValue}
-        localStorageMaxValue={props.localStorageMaxValue}
         showDisplay={props.showDisplay}
         setShowDisplay={props.setShowDisplay}
-        showNewDisplay={showNewDisplay}
       />
       <div className={styles.buttons}>
         {

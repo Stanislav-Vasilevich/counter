@@ -10,10 +10,13 @@ export type displayType = 'enter values and press "set"'
 function App() {
   const [startValue, setStartValue] = useState(0);
   const [maxValue, setMaxValue] = useState(5);
-  const [localStorageStartValue, setLocalStorageStartValue] = useState(0);
-  const [localStorageMaxValue, setLocalStorageMaxValue] = useState(0);
   const [display, setDisplay] = useState(0);
   const [showDisplay, setShowDisplay] = useState<displayType>(0);
+
+  console.log('startValue', startValue);
+  // console.log('maxValue', maxValue);
+  console.log('display', display);
+  // console.log('show-display: ', showDisplay);
 
   return (
     <div className={styles.App}>
@@ -30,10 +33,6 @@ function App() {
               setDisplay={setDisplay}
               showDisplay={showDisplay}
               setShowDisplay={setShowDisplay}
-              localStorageStartValue={localStorageStartValue}
-              setLocalStorageStartValue={setLocalStorageStartValue}
-              localStorageMaxValue={localStorageMaxValue}
-              setLocalStorageMaxValue={setLocalStorageMaxValue}
             />
             <Box
               type={'counter'}
@@ -45,10 +44,6 @@ function App() {
               setDisplay={setDisplay}
               showDisplay={showDisplay}
               setShowDisplay={setShowDisplay}
-              localStorageStartValue={localStorageStartValue}
-              setLocalStorageStartValue={setLocalStorageStartValue}
-              localStorageMaxValue={localStorageMaxValue}
-              setLocalStorageMaxValue={setLocalStorageMaxValue}
             />
           </div>
         </div>
