@@ -6,17 +6,25 @@ export type boxType = 'counter' | 'setCounter';
 export type displayType = 'enter values and press "set"'
   | 'Incorrect value!'
   | number;
+export type disabledType = {
+	set: boolean
+	inc: boolean
+	reset: boolean
+}
 
 function App() {
   const [startValue, setStartValue] = useState(0);
   const [maxValue, setMaxValue] = useState(5);
-  const [display, setDisplay] = useState(0);
-  const [showDisplay, setShowDisplay] = useState<displayType>(0);
+  const [display, setDisplay] = useState<displayType>(0);
+	const [disabled, setDisabled] = useState<disabledType>({
+		set: true,
+		inc: false,
+		reset: true
+	});
 
-  console.log('startValue', startValue);
-  // console.log('maxValue', maxValue);
-  console.log('display', display);
-  // console.log('show-display: ', showDisplay);
+  // console.log('startValue', startValue); // стартовое значение, изменяется из localStorage
+  // console.log('maxValue', maxValue) // максимальное значение, изменяется из localStorage
+  // console.log('display', display); // число показываемое в display, изменяется из startValue
 
   return (
     <div className={styles.App}>
@@ -25,25 +33,25 @@ function App() {
           <div className={styles.col}>
             <Box
               type={'setCounter'}
+							disabled={disabled}
+							setDisabled={setDisabled}
               startValue={startValue}
               maxValue={maxValue}
               setStartValue={setStartValue}
               setMaxValue={setMaxValue}
               display={display}
               setDisplay={setDisplay}
-              showDisplay={showDisplay}
-              setShowDisplay={setShowDisplay}
             />
             <Box
               type={'counter'}
+							disabled={disabled}
+							setDisabled={setDisabled}
               startValue={startValue}
               maxValue={maxValue}
               setStartValue={setStartValue}
               setMaxValue={setMaxValue}
               display={display}
               setDisplay={setDisplay}
-              showDisplay={showDisplay}
-              setShowDisplay={setShowDisplay}
             />
           </div>
         </div>

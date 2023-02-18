@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from 'react';
 import {boxType, displayType} from '../../App';
-import styles from './Display.module.css'
+import s from './Display.module.css'
 
 type PropsType = {
   type: boxType
@@ -8,32 +8,15 @@ type PropsType = {
   maxValue: number
   changeStartValue: (num: number) => void
   changeMaxValue: (num: number) => void
-  display: number
+  display: displayType
   setDisplay: (num: number) => void
-  showDisplay: displayType
-  setShowDisplay: (value: displayType) => void
 }
 
 const Display = (props: PropsType) => {
-  const classActive = props.display === props.maxValue ? styles.active : '';
-  const classes = styles.num + ' ' + classActive;
-
-  //   if(props.startValue < 0) {
-  //     props.setShowDisplay('Incorrect value!');
-  //   } else if (
-  //     props.startValue === props.maxValue
-  //     || props.startValue > props.maxValue
-  //   ) {
-  //     props.setShowDisplay('Incorrect value!');
-  //   }
-  //   else if (
-  //     props.startValue !== props.localStorageStartValue
-  //     || props.maxValue !== props.localStorageMaxValue
-  //   ) {
-  //     props.setShowDisplay('enter values and press "set"');
-  //   } else {
-  //     props.setShowDisplay(props.localStorageStartValue);
-  //   }
+  const classActive = props.display === props.maxValue ? s.active : '';
+  const classErrorText = props.startValue < 0 ? s.errorText : '';
+  const classInputError = props.startValue < 0 ? s.inputError : '';
+  const classText = typeof props.display === 'string' ? s.text : '';
 
   const changeMaxCounterHandler = (e:ChangeEvent<HTMLInputElement>) => {
     props.changeMaxValue(Number(e.currentTarget.value));
@@ -44,25 +27,27 @@ const Display = (props: PropsType) => {
   }
 
   return (
-    <div className={styles.display}>
+    <div className={s.display}>
       {
         props.type === 'counter'
           // экран с номером
-          ? <div className={classes}>{props.display}</div>
+          ? <div className={`${s.num} ${classActive} ${classErrorText} ${classText}`}>{props.display}</div>
           // экран с вводом данных
           : (
-            <div className={styles.display}>
-              <div className={styles.row}>
-                <span>max value:</span>
+            <div className={s.display}>
+              <div className={s.row}>
+                <span className={s.label}>max value:</span>
                 <input
+									className={s.input}
                   type="number"
                   value={props.maxValue}
                   onChange={changeMaxCounterHandler}
                 />
               </div>
-              <div className={styles.row}>
-                <span>start value:</span>
+              <div className={s.row}>
+                <span className={s.label}>start value:</span>
                 <input
+									className={`${s.input} ${classInputError}`}
                   type="number"
                   value={props.startValue}
                   onChange={changeStartCounterHandler}

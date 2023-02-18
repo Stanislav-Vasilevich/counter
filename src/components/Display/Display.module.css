@@ -22,11 +22,11 @@
   margin: 0;
 }
 
-.row span {
+.label {
   font-size: 22px;
 }
 
-.row input {
+.input {
   display: flex;
   width: 100px;
   height: 100%;
@@ -47,12 +47,16 @@
   font-size: 80px;
 }
 
-.text {
-  font-size: 20px;
-  color: #3d4747;
+.errorText {
+	font-size: 20px;
+	color: red;
 }
 
-.negative {
-  font-size: 20px;
-  color: red;
+.inputError {
+	outline: 2px solid red;
+	background: rgba(255, 0, 0, 0.62);
+}
+
+.text {
+	font-size: 18px;
 }
