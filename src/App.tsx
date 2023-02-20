@@ -22,10 +22,6 @@ function App() {
 		reset: true
 	});
 
-  // console.log('startValue', startValue); // стартовое значение, изменяется из localStorage
-  // console.log('maxValue', maxValue) // максимальное значение, изменяется из localStorage
-  // console.log('display', display); // число показываемое в display, изменяется из startValue
-
   return (
     <div className={styles.App}>
       <div className={styles.container}>

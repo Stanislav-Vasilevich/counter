@@ -16,20 +16,37 @@ type PropsType = {
   setDisplay: (num: displayType) => void
 }
 
-const Box = (props: PropsType) => {
-  useEffect(() => {
-    let getMaxValue = localStorage.getItem('maxNumber');
-    let getStartValue = localStorage.getItem('startNumber');
+export type errorType = {
+	start: boolean
+	max: boolean
+}
 
-    if(getStartValue) {
-			const startValue = JSON.parse(getStartValue);
+const Box = (props: PropsType) => {
+	const [error, setError] = useState<errorType>({
+		start: false,
+		max: false,
+	});
+
+	const getValues = () => {
+		const values = {
+			start: localStorage.getItem('startNumber'),
+			max: localStorage.getItem('maxNumber')
+		}
+		return values;
+	}
+
+  useEffect(() => {
+    const values = getValues();
+
+    if(values.start) {
+			const startValue = JSON.parse(values.start);
 
       props.setStartValue(startValue);
       props.setDisplay(startValue);
     }
 
-    if(getMaxValue) {
-			const maxValue = JSON.parse(getMaxValue);
+    if(values.max) {
+			const maxValue = JSON.parse(values.max);
 
       props.setMaxValue(maxValue);
     }
@@ -46,20 +63,15 @@ const Box = (props: PropsType) => {
 
   // кнопка inc
   const addDisplay = () => {
-		console.log('inc');
 		let display = props.display;
 
 		if(typeof display === "number") {
-			console.log('hi')
 			props.setDisplay(++display);
-			// props.setDisabled({...props.disabled, set: true, inc: false, reset: false});
 
 			if(display >= props.maxValue) {
-				console.log('bye')
 				props.setDisplay(props.maxValue);
 				props.setDisabled({...props.disabled, set: true, inc: true, reset: false});
 			} else {
-				console.log('hello')
 				props.setDisabled({...props.disabled, set: true, inc: false, reset: false});
 			}
 		}
@@ -67,7 +79,6 @@ const Box = (props: PropsType) => {
 
   // кнопка reset
   const resetDisplay = () => {
-		console.log('reset');
 		let num = props.display;
 
 		setInterval(() => {
@@ -78,36 +89,64 @@ const Box = (props: PropsType) => {
 				}
 			}
 		}, 50);
-		console.log('hhh')
 		props.setDisabled({...props.disabled, set: true, inc: false, reset: true});
   }
 
 	// input start value
   const changeStartValue = (num: number) => {
-		console.log('input start');
+		const values = getValues();
 
 		if(num < 0) {
+			console.log('4')
 			props.setDisplay('Incorrect value!');
+			setError({...error, start: true, max: false});
+		} else if(num >= Number(values.max)) {
+			console.log('5')
+			props.setDisplay('Incorrect value!');
+			setError({...error, start: true, max: true});
 		} else {
-			props.setDisplay('enter values and press "set"');
+			console.log('6')
+			if(num !== Number(values.start)) {
+				console.log('7')
+				props.setDisplay('enter values and press "set"');
+				setError({...error, start: false, max: false});
+			} else if(num === Number(values.start)) {
+				console.log('8')
+				props.setDisplay(num);
+				setError({...error, start: false, max: false});
+			}
 		}
+
 		props.setStartValue(num);
 		props.setDisabled({...props.disabled, set: false, inc: true});
   }
 
 	// input max value
   const changeMaxValue = (num: number) => {
-		if(num > 0) {
+		const values = getValues();
+
+		if(num <= Number(values.start)) {
+			console.log('1')
 			props.setDisplay('Incorrect value!');
+			setError({...error, start: true, max: true});
 		} else {
-			props.setDisplay('enter values and press "set"');
+			console.log('2')
+			if(num !== Number(values.max) && num > 0) {
+				props.setDisplay('enter values and press "set"');
+				setError({...error, start: false, max: false});
+			} else {
+				console.log('3')
+				props.setDisplay(Number(values.start));
+			}
 		}
     props.setMaxValue(num);
+		props.setDisabled({...props.disabled, set: false, inc: true});
   }
 
   return (
     <div className={styles.box}>
       <Display
+				error={error}
         type={props.type}
         startValue={props.startValue}
         maxValue={props.maxValue}

@@ -42,6 +42,10 @@
   color: #6d6c6c;
 }
 
+.text {
+	font-size: 18px;
+}
+
 .active {
   color: red;
   font-size: 80px;
@@ -55,8 +59,4 @@
 .inputError {
 	outline: 2px solid red;
 	background: rgba(255, 0, 0, 0.62);
-}
-
-.text {
-	font-size: 18px;
 }
