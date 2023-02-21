@@ -46,17 +46,16 @@
 	font-size: 18px;
 }
 
-.active {
+.maxValue {
   color: red;
   font-size: 80px;
-}
-
-.errorText {
-	font-size: 20px;
-	color: red;
 }
 
 .inputError {
 	outline: 2px solid red;
 	background: rgba(255, 0, 0, 0.62);
+}
+
+.errorText {
+	color: red;
 }

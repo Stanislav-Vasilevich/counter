@@ -3,10 +3,11 @@ import s from './Button.module.css';
 import {displayType} from "../../App";
 
 type PropsType = {
-	disabled: boolean
+	name: 'inc' | 'reset' | 'set' | 'setCount'
+	disabled?: boolean
   type: string
   count?: number
-  setValue: () => void
+  setValue?: () => void
   startValue?: number
   maxValue?: number
   display?: displayType
@@ -14,7 +15,7 @@ type PropsType = {
 
 const Button = (props: PropsType) => {
   const onClickHandler = () => {
-    props.setValue();
+		props.setValue && props.setValue();
   }
 
   return (
@@ -23,7 +24,7 @@ const Button = (props: PropsType) => {
       className={s.button}
       onClick={onClickHandler}
 		>
-      {props.type}
+      {props.name}
     </button>
   )
 }

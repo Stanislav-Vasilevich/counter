@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Display from "./../Display/Display";
 import Button from "./../Button/Button";
-import {boxType, disabledType, displayType} from '../../App';
+import {boxType, disabledType, displayType, errorType} from '../../App';
 import styles from './Box.module.css';
 
 type PropsType = {
@@ -14,18 +14,12 @@ type PropsType = {
   setMaxValue: (num: number) => void
   display: displayType
   setDisplay: (num: displayType) => void
-}
-
-export type errorType = {
-	start: boolean
-	max: boolean
+	inputsValue: errorType
+	setInputsValue: (error: errorType) => void
 }
 
 const Box = (props: PropsType) => {
-	const [error, setError] = useState<errorType>({
-		start: false,
-		max: false,
-	});
+	console.log('render Box')
 
 	const getValues = () => {
 		const values = {
@@ -36,6 +30,7 @@ const Box = (props: PropsType) => {
 	}
 
   useEffect(() => {
+		console.log('render Box useEffect')
     const values = getValues();
 
     if(values.start) {
@@ -97,28 +92,28 @@ const Box = (props: PropsType) => {
 		const values = getValues();
 
 		if(num < 0) {
-			console.log('4')
+			console.log('1: ', 1)
 			props.setDisplay('Incorrect value!');
-			setError({...error, start: true, max: false});
+			props.setInputsValue({...props.inputsValue, start: true, max: false});
 		} else if(num >= Number(values.max)) {
-			console.log('5')
+			console.log('2: ', 2)
 			props.setDisplay('Incorrect value!');
-			setError({...error, start: true, max: true});
+			props.setInputsValue({...props.inputsValue, start: true, max: true});
 		} else {
-			console.log('6')
+			console.log('3: ', 3)
 			if(num !== Number(values.start)) {
-				console.log('7')
+				console.log('4: ', 4)
 				props.setDisplay('enter values and press "set"');
-				setError({...error, start: false, max: false});
+				props.setInputsValue({...props.inputsValue, start: false, max: false});
+				props.setDisabled({...props.disabled, set: false, inc: true, reset: true});
 			} else if(num === Number(values.start)) {
-				console.log('8')
+				console.log('5: ', 5)
 				props.setDisplay(num);
-				setError({...error, start: false, max: false});
+				props.setInputsValue({...props.inputsValue, start: false, max: false});
+				props.setDisabled({...props.disabled, set: true, inc: false, reset: true});
 			}
 		}
-
 		props.setStartValue(num);
-		props.setDisabled({...props.disabled, set: false, inc: true});
   }
 
 	// input max value
@@ -126,27 +121,29 @@ const Box = (props: PropsType) => {
 		const values = getValues();
 
 		if(num <= Number(values.start)) {
-			console.log('1')
+			console.log('6: ', 6)
 			props.setDisplay('Incorrect value!');
-			setError({...error, start: true, max: true});
+			props.setInputsValue({...props.inputsValue, start: true, max: true});
+			props.setDisabled({...props.disabled, set: true, inc: true, reset: true});
 		} else {
-			console.log('2')
+			console.log('7: ', 7)
 			if(num !== Number(values.max) && num > 0) {
 				props.setDisplay('enter values and press "set"');
-				setError({...error, start: false, max: false});
+				props.setInputsValue({...props.inputsValue, start: false, max: false});
+				props.setDisabled({...props.disabled, set: false, inc: true, reset: true});
 			} else {
-				console.log('3')
+				console.log('8: ', 8)
 				props.setDisplay(Number(values.start));
+				props.setInputsValue({...props.inputsValue, start: false, max: false});
+				props.setDisabled({...props.disabled, set: true, inc: false, reset: true});
 			}
 		}
     props.setMaxValue(num);
-		props.setDisabled({...props.disabled, set: false, inc: true});
   }
 
   return (
     <div className={styles.box}>
       <Display
-				error={error}
         type={props.type}
         startValue={props.startValue}
         maxValue={props.maxValue}
@@ -154,6 +151,7 @@ const Box = (props: PropsType) => {
         setDisplay={props.setDisplay}
         changeStartValue={changeStartValue}
         changeMaxValue={changeMaxValue}
+				error={props.inputsValue}
       />
       <div className={styles.buttons}>
         {
@@ -161,6 +159,7 @@ const Box = (props: PropsType) => {
           ? (
             <>
               <Button
+								name={'inc'}
 								disabled={props.disabled.inc}
                 type={'inc'}
                 count={props.startValue}
@@ -169,6 +168,7 @@ const Box = (props: PropsType) => {
                 maxValue={props.maxValue}
               />
               <Button
+								name={'reset'}
 								disabled={props.disabled.reset}
 								type={'reset'}
                 count={props.startValue}
@@ -177,10 +177,15 @@ const Box = (props: PropsType) => {
                 startValue={props.startValue}
                 maxValue={props.maxValue}
               />
+							<Button
+								name={'set'}
+								type={'setCount'}
+							/>
             </>
             )
             : (
               <Button
+								name={'set'}
 								disabled={props.disabled.set}
                 type={'set'}
                 count={props.startValue}
