@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from './App.module.css';
 import Box from './components/Box/Box';
 
-export type boxType = 'counter' | 'setCounter';
+export type typeDisplay = 'counter' | 'setCounter';
 export type displayType = 'enter values and press "set"'
 	| 'Incorrect value!'
 	| number;
@@ -31,7 +31,7 @@ function App() {
 		start: false,
 		max: false,
 	});
-	const [typeBox, setTypeBox] = useState<boxType>('setCounter');
+	const [typeDisplay, setTypeDisplay] = useState<typeDisplay>('counter');
 
 	return (
 		<div className={styles.App}>
@@ -39,9 +39,11 @@ function App() {
 				<div className={styles.row}>
 					<div className={styles.col}>
 						{
-							typeBox === 'counter' ? (
+							typeDisplay === 'setCounter' ? (
 								<Box
-									type={'setCounter'}
+									typeBox={'setCounter'}
+									typeDisplay={typeDisplay}
+									setTypeDisplay={setTypeDisplay}
 									disabled={disabled}
 									setDisabled={setDisabled}
 									startValue={startValue}
@@ -55,7 +57,9 @@ function App() {
 								/>
 							) : (
 								<Box
-									type={'counter'}
+									typeBox={'counter'}
+									typeDisplay={typeDisplay}
+									setTypeDisplay={setTypeDisplay}
 									disabled={disabled}
 									setDisabled={setDisabled}
 									startValue={startValue}

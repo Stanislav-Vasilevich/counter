@@ -1,9 +1,9 @@
 import React, {ChangeEvent} from 'react';
-import {boxType, displayType, errorType} from '../../App';
+import {typeDisplay, displayType, errorType} from '../../App';
 import s from './Display.module.css'
 
 type PropsType = {
-	type: boxType
+	typeDisplay: typeDisplay
 	startValue: number
 	maxValue: number
 	changeStartValue: (num: number) => void
@@ -14,10 +14,6 @@ type PropsType = {
 }
 
 const Display = (props: PropsType) => {
-	console.log('render Display')
-	console.log('start: ', props.error.start)
-	console.log('max: ', props.error.max)
-
 	const classText = typeof props.display === 'string' ? s.text : '';
 	const classDisplayMaxValue = props.maxValue === props.display ? s.maxValue : ''
 	const classTextErrorStart = props.error.start ? s.errorText : '';
@@ -36,7 +32,7 @@ const Display = (props: PropsType) => {
 	return (
 		<div className={s.display}>
 			{
-				props.type === 'counter'
+				props.typeDisplay === 'counter'
 					// экран с номером
 					? <div className={`${s.num} ${classText} ${classDisplayMaxValue} ${classTextErrorStart} ${classTextErrorMax}`}>
 						{props.display}
