@@ -1,6 +1,6 @@
 import s from './Dashboard.module.css';
-import {CountNumberType} from '../Counter/Counter';
 import Button from '../Button/Button';
+import {CountNumberType} from '../Counter/Counter';
 import ProgressBar from '../ProgressBar/ProgressBar';
 
 export type StyleType = {
@@ -8,14 +8,20 @@ export type StyleType = {
 }
 
 type PropsType = {
-  changeCount: (num: CountNumberType) => void
-  resetCount: (min: CountNumberType) => void
-  count: CountNumberType
   min: CountNumberType
   max: CountNumberType
+  count: CountNumberType
+  resetCount: (min: CountNumberType) => void
+  changeCount: (num: CountNumberType) => void
 }
 
-const Dashboard: React.FC<PropsType> = ({changeCount, resetCount, count, min, max}) => {
+const Dashboard: React.FC<PropsType> = ({
+    changeCount,
+    resetCount,
+    count,
+    min,
+    max
+  }) => {
   const changeCountHandler = () => {
     count++;
 
@@ -38,7 +44,7 @@ const Dashboard: React.FC<PropsType> = ({changeCount, resetCount, count, min, ma
   const style: StyleType = {width: `${100 / max * count}%`}
 
   return (
-    <div className={s.Dashboard}>
+    <div className="dashboard">
       <ProgressBar style={style}/>
 
       <div className={s.buttons}>

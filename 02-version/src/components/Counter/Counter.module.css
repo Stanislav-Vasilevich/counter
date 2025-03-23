@@ -1,9 +1,5 @@
 .Counter {
-  width: 300px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  border: 1px solid grey;
-  border-radius: 20px;
-  padding: 10px;
+  gap: 50px;
+  margin: auto;
 }
