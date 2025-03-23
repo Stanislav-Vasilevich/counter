@@ -10,19 +10,6 @@
   border-radius: 20px;
 }
 
-.line {
-  width: 200px;
-  height: 3px;
-  background: transparent;
-  outline: 1px solid #fff;
-}
-
-.inside {
-  display: block;
-  height: 100%;
-  background: #fff;
-}
-
 .buttons {
   display: flex;
   justify-content: center;
