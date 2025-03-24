@@ -4,7 +4,7 @@ type PropsType = {
   title: string
   className?: string
   onClick: () => void
-  disabled: boolean
+  disabled?: boolean
 }
 
 const Button: React.FC<PropsType> = ({title, className, onClick, disabled}) => {

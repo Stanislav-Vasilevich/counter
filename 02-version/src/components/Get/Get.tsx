@@ -1,14 +1,13 @@
 import s from './Get.module.css';
 import Display from '../Display/Display';
 import Dashboard from '../Dashboard/Dashboard';
-import {CountNumberType} from '../Counter/Counter';
 
 type PropsType = {
   min: number
   max: number
-  count: CountNumberType
-  resetCount: (min: CountNumberType) => void
-  changeCount: (num: CountNumberType) => void
+  count: number
+  resetCount: (min: number) => void
+  changeCount: (num: number) => void
 }
 
 const Get: React.FC<PropsType> = ({changeCount, resetCount, count, min, max}) => {

@@ -1,32 +1,49 @@
-import {useState} from 'react';
+import { useState} from 'react';
 import s from './Counter.module.css';
-import Display from '../Display/Display';
-import Dashboard from '../Dashboard/Dashboard';
 import Set from '../Set/Set';
 import Get from '../Get/Get';
 
-export type CountNumberType = 0 | 1 | 2 | 3 | 4 | 5;
-
 const Counter = () => {
-  const [count, setCount] = useState<CountNumberType>(0);
-  const min = 0;
-  const max = 5;
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(5);
+  const [newMin, setNewMin] = useState<number>(min);
+  const [newMax, setNewMax] = useState<number>(max);
+  const [count, setCount] = useState<number>(min);
 
-  const changeCount = (num: CountNumberType) => {
+  const changeCount = (num: number) => {
     setCount(num);
   }
 
-  const resetCount = (min: CountNumberType) => {
+  const resetCount = (min: number) => {
     setCount(min);
   }
 
-  const setNewCount = () => {
+  const setValues = (min: number, max: number) => {
+    setMin(min);
+    setMax(max);
+  }
 
+  const setNewMinValue = (value: number) => {
+    setNewMin(value);
+  }
+
+  const setNewMaxValue = (value: number) => {
+    setNewMin(value);
   }
 
   return (
     <div className={s.Counter}>
-      <Set min={min} max={max} setNewCount={setNewCount}/>
+      <Set min={min}
+           max={max}
+           newMin={newMin}
+           newMax={newMax}
+           setNewMin={setNewMin}
+           setNewMax={setNewMax}
+           setValues={setValues}
+           setNewMinValue={setNewMinValue}
+           setNewMaxValue={setNewMaxValue}
+           changeCount={changeCount}
+      />
       <Get min={min} max={max} changeCount={changeCount} resetCount={resetCount} count={count}/>
     </div>
   );
