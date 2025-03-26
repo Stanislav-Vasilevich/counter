@@ -4,6 +4,8 @@ import {FormEvent} from 'react';
 type PropsType = {
   setNewValue: (value: number) => void
   newMax: number
+	count?: number | string
+	setCount: (count: number | string) => void
 }
 
 const InputMax: React.FC<PropsType> = ({newMax, setNewValue}) => {

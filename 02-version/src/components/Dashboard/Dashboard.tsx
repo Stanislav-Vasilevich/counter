@@ -1,58 +1,70 @@
 import s from './Dashboard.module.css';
 import Button from '../Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import {useState} from "react";
 
 export type StyleType = {
-  width: string
+	width: string
 }
 
 type PropsType = {
-  min: number
-  max: number
-  count: number
-  resetCount: (min: number) => void
-  changeCount: (num: number) => void
+	min: number
+	max: number
+	step: number
+	count: number | string
+	progress: number
+	setStep: (step: number) => void
+	resetCount: (min: number) => void
+	changeCount: (num: number) => void
 }
 
-const Dashboard: React.FC<PropsType> = ({
-    changeCount,
-    resetCount,
-    count,
-    min,
-    max
-  }) => {
-  const changeCountHandler = () => {
-    count++;
+const Dashboard: React.FC<PropsType> = (
+	{
+		changeCount,
+		resetCount,
+		count,
+		min,
+		max,
+		step,
+		setStep,
+		progress
+	}) => {
+	const resetCountHandler = () => {
+		setStep(0);
+		setInterval(() => {
+			if (count > min) {
+				count--;
+				resetCount(count);
+			}
+		}, 50);
+	}
 
-    if(count <= max) {
-      changeCount(count);
-    }
-  }
+	const disabledClassMax = count === max ? `${s.button} ${s.disabled}` : s.button;
+	const disabledClassMin = count === min ? `${s.button} ${s.disabled}` : s.button;
+	const widthLine = 100 / progress;
 
-  const resetCountHandler = () => {
-    setInterval(() => {
-      if(count > min) {
-        count--;
-        resetCount(count);
-      }
-    }, 50);
-  }
+	const changeCountHandler = () => {
+		count++;
 
-  const disabledClassMax = count === max ? `${s.button} ${s.disabled}` : s.button;
-  const disabledClassMin = count === min ? `${s.button} ${s.disabled}` : s.button;
-  const style: StyleType = {width: `${100 / (max - min) * count}%`};
-  console.log('style: ', style);
+		if (count <= max) {
+			changeCount(count);
+		}
 
-  return (
-    <div className="dashboard">
-      <ProgressBar style={min ? {width: '0'} : style}/>
+		if(step < max) {
+			setStep(++step);
+		}
+	}
 
-      <div className={s.buttons}>
-        <Button className={disabledClassMax} title="inc" onClick={changeCountHandler} disabled={count === max}/>
-        <Button className={disabledClassMin} title="reset" onClick={resetCountHandler} disabled={count === min}/>
-      </div>
-    </div>
-  );
+	return (
+		<div className="dashboard">
+			<ProgressBar style={{width: `${step * widthLine}%`}}/>
+
+			<div className={s.buttons}>
+				<Button className={disabledClassMax} title="inc" onClick={changeCountHandler} disabled={count === max}/>
+				<Button className={disabledClassMin} title="reset" onClick={resetCountHandler} disabled={count === min}/>
+			</div>
+		</div>
+	);
 };
 
 export default Dashboard;

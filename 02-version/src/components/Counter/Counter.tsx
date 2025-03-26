@@ -8,7 +8,9 @@ const Counter = () => {
   const [max, setMax] = useState<number>(5);
   const [newMin, setNewMin] = useState<number>(min);
   const [newMax, setNewMax] = useState<number>(max);
-  const [count, setCount] = useState<number>(min);
+  const [count, setCount] = useState<number | string>(min);
+	const [progress, setProgress] = useState(max - min);
+	const [step, setStep] = useState(0);
 
   const changeCount = (num: number) => {
     setCount(num);
@@ -28,7 +30,7 @@ const Counter = () => {
   }
 
   const setNewMaxValue = (value: number) => {
-    setNewMin(value);
+    setNewMax(value);
   }
 
   return (
@@ -37,6 +39,8 @@ const Counter = () => {
            max={max}
            newMin={newMin}
            newMax={newMax}
+					 progress={progress}
+					 setProgress={setProgress}
            setNewMin={setNewMin}
            setNewMax={setNewMax}
            setValues={setValues}
@@ -44,7 +48,16 @@ const Counter = () => {
            setNewMaxValue={setNewMaxValue}
            changeCount={changeCount}
       />
-      <Get min={min} max={max} changeCount={changeCount} resetCount={resetCount} count={count}/>
+      <Get min={min}
+					 max={max}
+					 progress={progress}
+					 changeCount={changeCount}
+					 resetCount={resetCount}
+					 count={count}
+					 setCount={setCount}
+					 step={step}
+					 setStep={setStep}
+			/>
     </div>
   );
 };
