@@ -5,6 +5,8 @@ import Dashboard from '../Dashboard/Dashboard';
 type PropsType = {
   min: number
   max: number
+	newMin: number
+	newMax: number
 	step: number
   count: number | string
 	setCount: (count: number | string) => void
@@ -24,17 +26,21 @@ const Get: React.FC<PropsType> = (
 		progress,
 		step,
 		setStep,
-		setCount
+		setCount,
+		newMin,
+		newMax
 	}) => {
   return (
     <div className={s.Get}>
-      <Display type="get" count={count} min={min} max={max} setCount={setCount}/>
+      <Display type="get" count={count} min={min} max={max} setCount={setCount} newMin={newMin}/>
       <Dashboard
 				changeCount={changeCount}
 				resetCount={resetCount}
 				count={count}
 				min={min}
 				max={max}
+				newMin={newMin}
+				newMax={newMax}
 				progress={progress}
 				step={step}
 				setStep={setStep}

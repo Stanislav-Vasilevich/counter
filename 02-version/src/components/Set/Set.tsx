@@ -14,6 +14,8 @@ type PropsType = {
   setNewMinValue: (value: number) => void
   setNewMaxValue: (value: number) => void
   changeCount: (newMin: number) => void
+  count: number
+  setCount: (value: number) => void
 }
 
 const Set: React.FC<PropsType> = (
@@ -26,7 +28,9 @@ const Set: React.FC<PropsType> = (
     setValues,
     setNewMinValue,
     setNewMaxValue,
-    changeCount
+    changeCount,
+    count,
+    setCount
   }) => {
   const setMinHandler = (min: number) => {
     setNewMinValue(min);
@@ -52,10 +56,12 @@ const Set: React.FC<PropsType> = (
                newMax={newMax}
                setMin={setMinHandler}
                setMax={setMaxHandler}
+               count={count}
+               setCount={setCount}
       />
 
       <div className="dashboard">
-        <Button title="set" onClick={setNewValues}/>
+        <Button title="set" onClick={setNewValues} disabled={newMin >= max || newMin < newMax || newMax <= min || newMax <= newMin}/>
       </div>
     </div>
   );

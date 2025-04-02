@@ -16,3 +16,10 @@
 .button:active {
   background: #d1d1d1;
 }
+
+.button:disabled, .button:disabled:hover {
+  cursor: no-drop;
+  outline: 1px solid #fff;
+  background: grey;
+  color: #adadad;
+}

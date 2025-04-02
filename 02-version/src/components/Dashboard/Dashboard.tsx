@@ -1,7 +1,6 @@
 import s from './Dashboard.module.css';
 import Button from '../Button/Button';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import {useState} from "react";
 
 export type StyleType = {
 	width: string
@@ -10,12 +9,14 @@ export type StyleType = {
 type PropsType = {
 	min: number
 	max: number
+	newMin: number
+	newMax: number
 	step: number
 	count: number | string
 	progress: number
 	setStep: (step: number) => void
-	resetCount: (min: number) => void
-	changeCount: (num: number) => void
+	resetCount: (min: number | string) => void
+	changeCount: (num: number | string) => void
 }
 
 const Dashboard: React.FC<PropsType> = (
@@ -27,7 +28,9 @@ const Dashboard: React.FC<PropsType> = (
 		max,
 		step,
 		setStep,
-		progress
+		progress,
+		newMin,
+		newMax
 	}) => {
 	const resetCountHandler = () => {
 		setStep(0);
@@ -39,8 +42,8 @@ const Dashboard: React.FC<PropsType> = (
 		}, 50);
 	}
 
-	const disabledClassMax = count === max ? `${s.button} ${s.disabled}` : s.button;
-	const disabledClassMin = count === min ? `${s.button} ${s.disabled}` : s.button;
+	const disabledInc = count === max || newMin > min || newMax > max || newMin < min || newMax <= min ? s.disabled : '';
+	const disabledReset = count === min || newMin > min || newMax > max || newMin < min ? s.disabled : '';
 	const widthLine = 100 / progress;
 
 	const changeCountHandler = () => {
@@ -55,13 +58,26 @@ const Dashboard: React.FC<PropsType> = (
 		}
 	}
 
+	console.log('newMin: ', newMin)
+	console.log('newMax: ', newMax)
+	console.log('min: ', min)
+	console.log('max: ', max)
+	console.log('count: ', count)
+	console.log('count === min: ', count === min)
+
 	return (
 		<div className="dashboard">
 			<ProgressBar style={{width: `${step * widthLine}%`}}/>
 
 			<div className={s.buttons}>
-				<Button className={disabledClassMax} title="inc" onClick={changeCountHandler} disabled={count === max}/>
-				<Button className={disabledClassMin} title="reset" onClick={resetCountHandler} disabled={count === min}/>
+				<Button className={`${s.button} ${disabledInc}`}
+								title="inc"
+								onClick={changeCountHandler}
+								disabled={count === max}/> {/* || newMin >= max || newMin < min */}
+				<Button className={`${s.button} ${disabledReset}`}
+								title="reset"
+								onClick={resetCountHandler}
+								disabled={count === min}/>
 			</div>
 		</div>
 	);

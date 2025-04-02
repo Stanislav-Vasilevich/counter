@@ -47,9 +47,15 @@ const Counter = () => {
            setNewMinValue={setNewMinValue}
            setNewMaxValue={setNewMaxValue}
            changeCount={changeCount}
+           setMax={setMax}
+           setMin={setMin}
+           count={count}
+           setCount={setCount}
       />
       <Get min={min}
 					 max={max}
+           newMin={newMin}
+           newMax={newMax}
 					 progress={progress}
 					 changeCount={changeCount}
 					 resetCount={resetCount}

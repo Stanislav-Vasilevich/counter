@@ -6,8 +6,8 @@ type PropsType = {
 	type: 'set' | 'get'
 	min: number
 	max: number
-	newMin: number
-	newMax: number
+	newMin?: number
+	newMax?: number
 	setMin?: (min: number) => void
 	setMax?: (max: number) => void
 	count: number | string
@@ -26,8 +26,9 @@ const Display: React.FC<PropsType> = (
 		setMax,
 		setCount
 	}) => {
-	console.log('count: ', count);
-	const disabledClass = count === max ? `${s.number} ${s.max}` : s.number;
+	const disabledClass = count === max ? s.error : '';
+	const setString = typeof(count) === 'string' ? s.text : '';
+	const error = newMin >= max || newMin < min ? s.error : '';
 
 	const setMinHandler = (min: number) => {
 		setMin && setMin(min);
@@ -47,7 +48,9 @@ const Display: React.FC<PropsType> = (
 								start value:
 								<InputMin
 									min={min}
+									max={max}
 									newMin={newMin}
+									newMax={newMax}
 									setNewValue={setMinHandler}
 									count={count}
 									setCount={setCount}
@@ -56,6 +59,8 @@ const Display: React.FC<PropsType> = (
 							<label className={s.label}>
 								max value:
 								<InputMax
+									min={min}
+									newMin={newMin}
 									newMax={newMax}
 									setNewValue={setMaxHandler}
 									count={count}
@@ -64,9 +69,8 @@ const Display: React.FC<PropsType> = (
 							</label>
 						</div>
 					)
-					: <span className={disabledClass}>{count}</span>
+					: <span className={`${s.count} ${setString} ${disabledClass} ${error}`}>{count}</span>
 			}
-
 		</div>
 	);
 };

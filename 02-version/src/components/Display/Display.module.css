@@ -9,12 +9,16 @@
   padding: 20px 30px;
 }
 
-.number {
+.count {
   font-size: 70px;
   color: #fff;
 }
 
-.max {
+.text {
+  font-size: 18px;
+}
+
+.error {
   color: red;
   font-weight: bold;
 }
