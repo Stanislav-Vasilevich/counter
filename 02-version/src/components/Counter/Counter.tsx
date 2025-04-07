@@ -3,14 +3,23 @@ import s from './Counter.module.css';
 import Set from '../Set/Set';
 import Get from '../Get/Get';
 
+type LocalStorageDataType = string | null;
+
 const Counter = () => {
-  const [min, setMin] = useState<number>(0);
-  const [max, setMax] = useState<number>(5);
-  const [newMin, setNewMin] = useState<number>(min);
-  const [newMax, setNewMax] = useState<number>(max);
-  const [count, setCount] = useState<number | string>(min);
+  const LS: LocalStorageDataType = localStorage.getItem('count');
+  const dataFromLS =  LS && JSON.parse(LS);
+
+  const [min, setMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
+  const [max, setMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
+  const [newMin, setNewMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
+  const [newMax, setNewMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
+  const [count, setCount] = useState<number | string>(dataFromLS.min ? dataFromLS.min : 0);
 	const [progress, setProgress] = useState(max - min);
 	const [step, setStep] = useState(0);
+
+  const setNewMaxValue = (value: number) => {
+    setNewMax(value);
+  }
 
   const changeCount = (num: number) => {
     setCount(num);
@@ -21,16 +30,14 @@ const Counter = () => {
   }
 
   const setValues = (min: number, max: number) => {
+    localStorage.setItem('count', JSON.stringify({min, max}));
+
     setMin(min);
     setMax(max);
   }
 
   const setNewMinValue = (value: number) => {
     setNewMin(value);
-  }
-
-  const setNewMaxValue = (value: number) => {
-    setNewMax(value);
   }
 
   return (

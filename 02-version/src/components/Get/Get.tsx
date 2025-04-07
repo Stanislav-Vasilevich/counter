@@ -32,7 +32,7 @@ const Get: React.FC<PropsType> = (
 	}) => {
   return (
     <div className={s.Get}>
-      <Display type="get" count={count} min={min} max={max} setCount={setCount} newMin={newMin}/>
+      <Display type="get" count={count} min={min} max={max} setCount={setCount} newMin={newMin} newMax={newMax}/>
       <Dashboard
 				changeCount={changeCount}
 				resetCount={resetCount}

@@ -15,10 +15,18 @@ const InputMax: React.FC<PropsType> = (
     newMax,
     setNewValue,
     min,
-    newMin
+    newMin,
+    count,
+    setCount
   }) => {
   const changeValuesHandler = (e: FormEvent<HTMLInputElement>) => {
-    setNewValue(Number(e.currentTarget.value));
+    const num = Number(e.currentTarget.value);
+
+    if (num <= newMax) {
+      setCount('Incorrect value');
+    }
+
+    setNewValue(num);
   }
 
   const error = newMax <= min || newMin >= newMax ? s.error : '';

@@ -6,10 +6,10 @@ type PropsType = {
 	type: 'set' | 'get'
 	min: number
 	max: number
-	newMin?: number
-	newMax?: number
-	setMin?: (min: number) => void
-	setMax?: (max: number) => void
+	newMin: number
+	newMax: number
+	setMin: (min: number) => void
+	setMax: (max: number) => void
 	count: number | string
 	setCount: (count: number | string) => void
 }
@@ -28,14 +28,14 @@ const Display: React.FC<PropsType> = (
 	}) => {
 	const disabledClass = count === max ? s.error : '';
 	const setString = typeof(count) === 'string' ? s.text : '';
-	const error = newMin >= max || newMin < min ? s.error : '';
+	const error = newMin < 0 || newMin >= newMax ? s.error : '';
 
 	const setMinHandler = (min: number) => {
-		setMin && setMin(min);
+		setMin(min);
 	}
 
 	const setMaxHandler = (max: number) => {
-		setMax && setMax(max);
+		setMax(max);
 	}
 
 	return (

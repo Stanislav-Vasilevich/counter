@@ -61,7 +61,13 @@ const Set: React.FC<PropsType> = (
       />
 
       <div className="dashboard">
-        <Button title="set" onClick={setNewValues} disabled={newMin >= max || newMin < newMax || newMax <= min || newMax <= newMin}/>
+        <Button title="set" onClick={setNewValues} disabled={
+          newMin === min && newMax === max
+          || newMin >= newMax
+          || newMin < 0
+          || newMin >= newMax
+        }
+        />
       </div>
     </div>
   );

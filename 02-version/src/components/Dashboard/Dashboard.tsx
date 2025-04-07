@@ -34,6 +34,7 @@ const Dashboard: React.FC<PropsType> = (
 	}) => {
 	const resetCountHandler = () => {
 		setStep(0);
+
 		setInterval(() => {
 			if (count > min) {
 				count--;
@@ -58,12 +59,11 @@ const Dashboard: React.FC<PropsType> = (
 		}
 	}
 
-	console.log('newMin: ', newMin)
-	console.log('newMax: ', newMax)
-	console.log('min: ', min)
-	console.log('max: ', max)
-	console.log('count: ', count)
-	console.log('count === min: ', count === min)
+	// console.log('newMin: ', newMin)
+	// console.log('newMax: ', newMax)
+	// console.log('min: ', min)
+	// console.log('max: ', max)
+	// console.log('count: ', count)
 
 	return (
 		<div className="dashboard">
