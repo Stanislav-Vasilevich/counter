@@ -1,4 +1,4 @@
-import { useState} from 'react';
+import {useEffect, useState} from 'react';
 import s from './Counter.module.css';
 import Set from '../Set/Set';
 import Get from '../Get/Get';
@@ -6,16 +6,24 @@ import Get from '../Get/Get';
 type LocalStorageDataType = string | null;
 
 const Counter = () => {
+  useEffect(() => {
+    localStorage.setItem('count', '0')
+  }, [])
+
   const LS: LocalStorageDataType = localStorage.getItem('count');
-  const dataFromLS =  LS && JSON.parse(LS);
+  const dataFromLS = LS && JSON.parse(LS);
+
+  console.log('LS: ', LS)
 
   const [min, setMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
   const [max, setMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
   const [newMin, setNewMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
   const [newMax, setNewMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
   const [count, setCount] = useState<number | string>(dataFromLS.min ? dataFromLS.min : 0);
-	const [progress, setProgress] = useState(max - min);
-	const [step, setStep] = useState(0);
+  const [progress, setProgress] = useState(max - min);
+  const [step, setStep] = useState(0);
+
+  console.log('min: ', min)
 
   const setNewMaxValue = (value: number) => {
     setNewMax(value);
@@ -46,8 +54,8 @@ const Counter = () => {
            max={max}
            newMin={newMin}
            newMax={newMax}
-					 progress={progress}
-					 setProgress={setProgress}
+           progress={progress}
+           setProgress={setProgress}
            setNewMin={setNewMin}
            setNewMax={setNewMax}
            setValues={setValues}
@@ -60,17 +68,17 @@ const Counter = () => {
            setCount={setCount}
       />
       <Get min={min}
-					 max={max}
+           max={max}
            newMin={newMin}
            newMax={newMax}
-					 progress={progress}
-					 changeCount={changeCount}
-					 resetCount={resetCount}
-					 count={count}
-					 setCount={setCount}
-					 step={step}
-					 setStep={setStep}
-			/>
+           progress={progress}
+           changeCount={changeCount}
+           resetCount={resetCount}
+           count={count}
+           setCount={setCount}
+           step={step}
+           setStep={setStep}
+      />
     </div>
   );
 };
