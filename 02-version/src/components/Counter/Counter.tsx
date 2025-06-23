@@ -6,22 +6,26 @@ import Get from '../Get/Get';
 type LocalStorageDataType = string | null;
 
 const Counter = () => {
-  useEffect(() => {
-    localStorage.setItem('count', '0')
-  }, [])
-
-  const LS: LocalStorageDataType = localStorage.getItem('count');
-  const dataFromLS = LS && JSON.parse(LS);
-
-  console.log('LS: ', LS)
-
-  const [min, setMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
-  const [max, setMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
-  const [newMin, setNewMin] = useState<number>(dataFromLS.min ? dataFromLS.min : 0);
-  const [newMax, setNewMax] = useState<number>(dataFromLS.max ? dataFromLS.max : 5);
-  const [count, setCount] = useState<number | string>(dataFromLS.min ? dataFromLS.min : 0);
+  const [min, setMin] = useState<number>(0);
+  const [max, setMax] = useState<number>(5);
+  const [newMin, setNewMin] = useState<number>(0);
+  const [newMax, setNewMax] = useState<number>(5);
+  const [count, setCount] = useState<number | string>(0);
   const [progress, setProgress] = useState(max - min);
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    const LS: LocalStorageDataType = localStorage.getItem('count');
+    const dataFromLS = LS && JSON.parse(LS);
+    const numberMin = dataFromLS.min && Number(dataFromLS.min)
+    const numberMax = dataFromLS.max && Number(dataFromLS.max)
+
+    setMin(numberMin)
+    setCount(numberMin)
+    setNewMin(numberMin)
+    setMax(numberMax)
+    setNewMax(numberMax)
+  }, []);
 
   console.log('min: ', min)
 

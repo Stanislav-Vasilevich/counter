@@ -6,5 +6,5 @@ import Counter from './components/Counter/Counter';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Counter />
-  </StrictMode>,
+  </StrictMode>
 )

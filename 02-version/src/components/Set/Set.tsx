@@ -7,6 +7,9 @@ type PropsType = {
   max: number
   newMin: number
   newMax: number
+  setNewMin: (min: number) => void
+  setNewMax: (max: number) => void
+  progress: number
 	setProgress: (newProgress: number) => void
   setMin: (min: number) => void
   setMax: (max: number) => void
@@ -14,8 +17,8 @@ type PropsType = {
   setNewMinValue: (value: number) => void
   setNewMaxValue: (value: number) => void
   changeCount: (newMin: number) => void
-  count: number
-  setCount: (value: number) => void
+  count: number | string
+  setCount: (value: number | string) => void
 }
 
 const Set: React.FC<PropsType> = (
