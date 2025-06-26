@@ -1,4 +1,5 @@
-import s from './Button.module.css';
+import styles from './Button.module.css';
+import * as React from "react";
 
 type PropsType = {
   title: string
@@ -8,7 +9,15 @@ type PropsType = {
 }
 
 const Button: React.FC<PropsType> = ({title, className, onClick, disabled}) => {
-  return <button className={className ? className : s.button} onClick={onClick} disabled={disabled}>{title}</button>
+  return (
+    <button
+      className={className ? className : styles.button}
+      onClick={onClick}
+      disabled={disabled}
+    >
+      {title}
+    </button>
+  )
 };
 
 export default Button;

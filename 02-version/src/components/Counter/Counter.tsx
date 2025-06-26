@@ -1,11 +1,13 @@
 import {useEffect, useState} from 'react';
-import s from './Counter.module.css';
+import styles from './Counter.module.css';
 import Set from '../Set/Set';
 import Get from '../Get/Get';
 
 type LocalStorageDataType = string | null;
+export type Settings = 'get' | 'set'
 
 const Counter = () => {
+  const [settings, setSettings] = useState<Settings>('get');
   const [min, setMin] = useState<number>(0);
   const [max, setMax] = useState<number>(5);
   const [newMin, setNewMin] = useState<number>(0);
@@ -17,17 +19,16 @@ const Counter = () => {
   useEffect(() => {
     const LS: LocalStorageDataType = localStorage.getItem('count');
     const dataFromLS = LS && JSON.parse(LS);
-    const numberMin = dataFromLS.min && Number(dataFromLS.min)
-    const numberMax = dataFromLS.max && Number(dataFromLS.max)
+    const localStorageMinValue = dataFromLS.min && Number(dataFromLS.min)
+    const localStorageMaxValue = dataFromLS.max && Number(dataFromLS.max)
 
-    setMin(numberMin)
-    setCount(numberMin)
-    setNewMin(numberMin)
-    setMax(numberMax)
-    setNewMax(numberMax)
+    setMin(localStorageMinValue)
+    setCount(localStorageMinValue)
+    setNewMin(localStorageMinValue)
+    setMax(localStorageMaxValue)
+    setNewMax(localStorageMaxValue)
+    setProgress(localStorageMaxValue - localStorageMinValue);
   }, []);
-
-  console.log('min: ', min)
 
   const setNewMaxValue = (value: number) => {
     setNewMax(value);
@@ -52,37 +53,51 @@ const Counter = () => {
     setNewMin(value);
   }
 
+  const changeSettings = (settings: Settings) => {
+    setSettings(settings)
+  }
+
   return (
-    <div className={s.Counter}>
-      <Set min={min}
-           max={max}
-           newMin={newMin}
-           newMax={newMax}
-           progress={progress}
-           setProgress={setProgress}
-           setNewMin={setNewMin}
-           setNewMax={setNewMax}
-           setValues={setValues}
-           setNewMinValue={setNewMinValue}
-           setNewMaxValue={setNewMaxValue}
-           changeCount={changeCount}
-           setMax={setMax}
-           setMin={setMin}
-           count={count}
-           setCount={setCount}
-      />
-      <Get min={min}
-           max={max}
-           newMin={newMin}
-           newMax={newMax}
-           progress={progress}
-           changeCount={changeCount}
-           resetCount={resetCount}
-           count={count}
-           setCount={setCount}
-           step={step}
-           setStep={setStep}
-      />
+    <div className={styles.counter}>
+      {
+        settings === 'set'
+          ? <Set min={min}
+                 max={max}
+                 newMin={newMin}
+                 newMax={newMax}
+                 progress={progress}
+                 setProgress={setProgress}
+                 setNewMin={setNewMin}
+                 setNewMax={setNewMax}
+                 setValues={setValues}
+                 setNewMinValue={setNewMinValue}
+                 setNewMaxValue={setNewMaxValue}
+                 changeCount={changeCount}
+                 setMax={setMax}
+                 setMin={setMin}
+                 count={count}
+                 setCount={setCount}
+                 settings={settings}
+                 changeSettings={changeSettings}
+          />
+          : <Get min={min}
+                 max={max}
+                 newMin={newMin}
+                 newMax={newMax}
+                 progress={progress}
+                 changeCount={changeCount}
+                 resetCount={resetCount}
+                 count={count}
+                 setCount={setCount}
+                 step={step}
+                 setStep={setStep}
+                 setMax={setMax}
+                 setMin={setMin}
+                 settings={settings}
+                 changeSettings={changeSettings}
+                 setProgress={setProgress}
+          />
+      }
     </div>
   );
 };

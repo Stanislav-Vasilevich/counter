@@ -1,6 +1,7 @@
-import s from './Display.module.css';
+import styles from './Display.module.css';
 import InputMin from '../InputMin/InputMin';
 import InputMax from '../InputMax/InputMax';
+import * as React from "react";
 
 type PropsType = {
 	type: 'set' | 'get'
@@ -26,9 +27,9 @@ const Display: React.FC<PropsType> = (
 		setMax,
 		setCount
 	}) => {
-	const disabledClass = count === max ? s.error : '';
-	const setString = typeof(count) === 'string' ? s.text : '';
-	const error = newMin < 0 || newMin >= newMax ? s.error : '';
+	const disabledClass = count === max ? styles.error : '';
+	const setString = typeof(count) === 'string' ? styles.text : '';
+	const error = newMin < 0 || newMin >= newMax ? styles.error : '';
 
 	const setMinHandler = (min: number) => {
 		setMin(min);
@@ -39,37 +40,37 @@ const Display: React.FC<PropsType> = (
 	}
 
 	return (
-		<div className={s.Display}>
+		<div className={styles.display}>
 			{
 				type === 'set'
 					? (
-						<div className={s.form}>
-							<label className={s.label}>
+						<div className={styles.form}>
+							<label className={styles.label}>
 								start value:
 								<InputMin
 									min={min}
-									max={max}
+									count={count}
 									newMin={newMin}
 									newMax={newMax}
 									setNewValue={setMinHandler}
-									count={count}
 									setCount={setCount}
 								/>
 							</label>
-							<label className={s.label}>
+							<label className={styles.label}>
 								max value:
 								<InputMax
 									min={min}
+									max={max}
+									count={count}
 									newMin={newMin}
 									newMax={newMax}
 									setNewValue={setMaxHandler}
-									count={count}
 									setCount={setCount}
 								/>
 							</label>
 						</div>
 					)
-					: <span className={`${s.count} ${setString} ${disabledClass} ${error}`}>{count}</span>
+					: <span className={`${styles.count} ${setString} ${disabledClass} ${error}`}>{count}</span>
 			}
 		</div>
 	);

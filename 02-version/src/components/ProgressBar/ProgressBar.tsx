@@ -1,14 +1,19 @@
-import s from './ProgressBar.module.css';
-import {StyleType} from '../Dashboard/Dashboard';
+import styles from './ProgressBar.module.css';
+import * as React from "react";
 
 type PropsType = {
-  style: StyleType
+  length: number
 }
 
-const ProgressBar: React.FC<PropsType> = ({style}) => {
+const ProgressBar: React.FC<PropsType> = ({length}) => {
+
+  const style = {width: `${length}%`};
+
+  console.log('style: ', style);
+
   return (
-    <div className={s.line}>
-      <span className={s.inside} style={style}></span>
+    <div className={styles.line}>
+      <span className={styles.inside} style={style}></span>
     </div>
   );
 };

@@ -1,6 +1,8 @@
-import s from './Set.module.css';
+import styles from './Set.module.css';
 import Display from '../Display/Display';
 import Button from '../Button/Button';
+import * as React from "react";
+import {Settings} from "../Counter/Counter.tsx";
 
 type PropsType = {
   min: number
@@ -10,7 +12,7 @@ type PropsType = {
   setNewMin: (min: number) => void
   setNewMax: (max: number) => void
   progress: number
-	setProgress: (newProgress: number) => void
+  setProgress: (newProgress: number) => void
   setMin: (min: number) => void
   setMax: (max: number) => void
   setValues: (newMin: number, newMax: number) => void
@@ -19,6 +21,8 @@ type PropsType = {
   changeCount: (newMin: number) => void
   count: number | string
   setCount: (value: number | string) => void
+  settings: Settings
+  changeSettings: (settings: Settings) => void
 }
 
 const Set: React.FC<PropsType> = (
@@ -27,13 +31,15 @@ const Set: React.FC<PropsType> = (
     max,
     newMin,
     newMax,
-		setProgress,
+    setProgress,
     setValues,
     setNewMinValue,
     setNewMaxValue,
     changeCount,
     count,
-    setCount
+    setCount,
+    settings,
+    changeSettings,
   }) => {
   const setMinHandler = (min: number) => {
     setNewMinValue(min);
@@ -44,14 +50,18 @@ const Set: React.FC<PropsType> = (
   }
 
   const setNewValues = () => {
-		const newProgress = newMax - newMin;
-		setProgress(newProgress);
+    const newProgress = newMax - newMin;
+    setProgress(newProgress);
     setValues(newMin, newMax);
     changeCount(newMin)
+    changeSettings('get')
+    // setProgress(0)
+
+    console.log('data2: ', settings)
   }
 
   return (
-    <div className={s.Set}>
+    <div className={styles.set}>
       <Display type="set"
                min={min}
                max={max}
@@ -63,13 +73,15 @@ const Set: React.FC<PropsType> = (
                setCount={setCount}
       />
 
-      <div className="dashboard">
-        <Button title="set" onClick={setNewValues} disabled={
-          newMin === min && newMax === max
-          || newMin >= newMax
-          || newMin < 0
-          || newMin >= newMax
-        }
+      <div className={styles.dashboard}>
+        <Button title="set"
+                onClick={setNewValues}
+                disabled={
+                  newMin === min && newMax === max
+                  || newMin >= newMax
+                  || newMin < 0
+                  || newMin >= newMax
+                }
         />
       </div>
     </div>

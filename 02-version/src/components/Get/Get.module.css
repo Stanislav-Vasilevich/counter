@@ -1,5 +1,7 @@
-.Get {
-  width: 300px;
+.get {
+  width: max-content;
+  min-width: 300px;
+  max-width: 387px;
   display: flex;
   flex-direction: column;
   gap: 10px;

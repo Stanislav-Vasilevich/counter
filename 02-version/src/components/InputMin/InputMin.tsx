@@ -1,26 +1,27 @@
-import s from './InputMin.module.css';
+import styles from './InputMin.module.css';
 import {FormEvent} from 'react';
+import * as React from "react";
 
 type PropsType = {
   min: number
-  max: number
+  count: number | string
   newMin: number
   newMax: number
   setNewValue: (value: number) => void
-  count?: number | string
   setCount: (count: number | string) => void
 }
 
 const InputMin: React.FC<PropsType> = (
   {
-    newMin,
-    setNewValue,
-    count,
-    setCount,
     min,
-    max,
-    newMax
+    count,
+    newMin,
+    newMax,
+    setNewValue,
+    setCount,
   }) => {
+  const value = Number(count)
+
   const changeValuesHandler = (e: FormEvent<HTMLInputElement>) => {
     const num = Number(e.currentTarget.value);
 
@@ -28,12 +29,12 @@ const InputMin: React.FC<PropsType> = (
       setCount('enter values and press "set"');
     }
 
-    if (num >= newMax) {
+    if (num < 0) {
       setCount('Incorrect value');
     }
 
-    if (num < 0) {
-      setCount('Incorrect value');
+    if (num >= newMax) {
+      setCount('the max value must be greater than the start value');
     }
 
     if (num === min) {
@@ -43,9 +44,19 @@ const InputMin: React.FC<PropsType> = (
     setNewValue(num);
   }
 
-  const error = newMin < 0 || newMin >= newMax ? s.error : '';
+  const error = newMin < 0 || newMin >= newMax ? styles.error : '';
+  const disabled = value > min ? styles.disabled : '';
 
-  return <input className={`${s.input} ${error}`} onChange={changeValuesHandler} type="number" value={newMin}/>;
+  return (
+    <input
+      className={`${styles.input} ${error} ${disabled}`}
+      onChange={changeValuesHandler}
+      type="number"
+      value={newMin}
+      disabled={value > min}
+      maxLength={7}
+    />
+  )
 };
 
 export default InputMin;

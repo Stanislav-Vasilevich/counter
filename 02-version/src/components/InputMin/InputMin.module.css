@@ -1,10 +1,18 @@
 .input {
   width: 100px;
   font-size: 20px;
+  text-align: center;
 }
 
 .error {
   background: #fea2a2;
-  border: 0;
+  border-color: transparent;
   outline: 1px solid red;
+}
+
+.disabled {
+  background: #dfdfdf;
+  color: #bdbdbd;
+  text-align: center;
+  cursor: not-allowed;
 }
